@@ -1,3 +1,9 @@
+import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
+
 export default function TimeLine() {
-  return
+  return (
+    <div className="">
+      <Boxes></Boxes>
+    </div>
+  );
 }
