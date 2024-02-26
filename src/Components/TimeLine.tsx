@@ -30,6 +30,7 @@ const events: TimeLineEvent[] = [
   // Add more events as needed
 ];
 
+import { Rows } from "./TimeLineGadgets/rows";
 
 export default function TimeLine() {
   return (
@@ -66,6 +67,8 @@ function Boxes({ progress, videoDuration }) {
         .map((_, index) => (
           <div key={index} className="box empty" />
         ))}
+      <Boxes></Boxes>
+      <Rows></Rows>
     </div>
   );
 }
