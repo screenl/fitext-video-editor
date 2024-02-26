@@ -67,8 +67,9 @@ function Boxes({ progress, videoDuration }) {
         .map((_, index) => (
           <div key={index} className="box empty" />
         ))}
-      <Boxes></Boxes>
+    <div className="flex flex-row justify-center ">
       <Rows></Rows>
+      <Boxes></Boxes>
     </div>
   );
 }
