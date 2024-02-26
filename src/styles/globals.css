@@ -34,7 +34,21 @@
  
     --radius: 0.5rem;
   }
- 
+
+  .box {
+    width: 1%;
+    height: 20px;
+    display: inline-block;
+  }
+  
+  .filled {
+    background-color: #007BFF; /* 蓝色 */
+  }
+  
+  .empty {
+    background-color: #E0E0E0; /* 灰色 */
+  }
+  
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
