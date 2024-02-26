@@ -11,21 +11,48 @@ export function Boxes() {
       className="min-h-52 min-w-[800px]  rounded-lg border"
     >
       <ResizablePanel defaultSize={30}>
-        <div className="flex h-full items-center justify-center p-6">
-          <span className="font-semibold">Sidebar</span>
-        </div>
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={30}>
-        <div className="flex h-full items-center justify-center p-6">
-          <span className="font-semibold">Content</span>
+        <div className=" flex h-full flex-col items-center justify-center ">
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Exercsise</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Sets</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Reps</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Duration</span>
+          <div className="divider divider-info"></div>
         </div>
       </ResizablePanel>
 
-      <ResizableHandle />
-      <ResizablePanel defaultSize={40}>
-        <div className="flex h-full items-center justify-center p-6">
-          <span className="font-semibold">Content</span>
+      <ResizableHandle withHandle />
+
+      <ResizablePanel defaultSize={30}>
+        <div className=" flex h-full flex-col items-center justify-center ">
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Exercsise</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Sets</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Reps</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Duration</span>
+          <div className="divider divider-info"></div>
+        </div>
+      </ResizablePanel>
+
+      <ResizableHandle withHandle />
+
+      <ResizablePanel defaultSize={20}>
+        <div className=" flex h-full flex-col items-center justify-center ">
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Exercsise</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Sets</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Reps</span>
+          <div className="divider divider-info"></div>
+          <span className="font-semibold">Duration</span>
+          <div className="divider divider-info"></div>
         </div>
       </ResizablePanel>
     </ResizablePanelGroup>
