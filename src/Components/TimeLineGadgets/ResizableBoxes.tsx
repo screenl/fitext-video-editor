@@ -45,7 +45,9 @@ export function Boxes() {
       <ResizablePanel defaultSize={20}>
         <div className=" flex h-full flex-col items-center justify-center ">
           <div className="divider divider-info"></div>
-          <span className="font-semibold">Exercsise</span>
+          <button className="btn btn-circle btn-info btn-outline text-2xl">
+            +
+          </button>
           <div className="divider divider-info"></div>
           <span className="font-semibold">Sets</span>
           <div className="divider divider-info"></div>
