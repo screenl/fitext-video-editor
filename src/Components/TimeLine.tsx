@@ -32,25 +32,6 @@ const events: TimeLineEvent[] = [
 
 
 export default function TimeLine() {
-  const [progress, setProgress] = useState(0);
-  const videoDuration = 100; // 视频总时长，这里假设为100秒
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === videoDuration) {
-          clearInterval(interval);
-          return oldProgress;
-        }
-        return Math.min(oldProgress + 1, videoDuration);
-      });
-    }, 1000); // 每秒更新一次
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [videoDuration]);
-
   return (
     <div>
       {events.map((event) => (
