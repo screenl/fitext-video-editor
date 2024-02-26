@@ -24,7 +24,7 @@ export function Boxes() {
         </div>
       </ResizablePanel>
 
-      <ResizableHandle withHandle />
+      <ResizableHandle withHandle></ResizableHandle>
 
       <ResizablePanel defaultSize={30}>
         <div className=" flex h-full flex-col items-center justify-center ">
@@ -45,7 +45,7 @@ export function Boxes() {
       <ResizablePanel defaultSize={20}>
         <div className=" flex h-full flex-col items-center justify-center ">
           <div className="divider divider-info"></div>
-          <button className="btn btn-circle btn-info btn-outline text-2xl">
+          <button className="btn btn-circle btn-outline btn-info text-2xl">
             +
           </button>
           <div className="divider divider-info"></div>
