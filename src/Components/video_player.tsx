@@ -30,7 +30,17 @@ export default function player(state: videoState){
   }
 
   function sideBar(){
-    return <div className="rounded-r-lg h-auto w-12 max-w-12 border-2 border-gray-300 dark:border-gray-800">
+    return <div className="flex flex-col rounded-r-lg h-auto w-12 max-w-12 border-2 border-gray-300 dark:border-gray-800">
+      <div className="basis-1/3 flex justify-center content-center">
+        <img src="arr.svg" className="w-9/12 scale-x-[-1] rotate-90 opacity-30 dark:invert"></img>
+      </div>
+      <div className="basis-1/3 flex justify-center content-center">
+        <img src="pause.svg" className="w-5/12 rotate-90 opacity-30 dark:invert"></img>
+      </div>
+
+      <div className="basis-1/3 flex justify-center content-center">
+        <img src="arr.svg" className="w-9/12 rotate-90  opacity-30 dark:invert"></img>
+      </div>
 
     </div>
   }
@@ -45,7 +55,7 @@ export default function player(state: videoState){
   return (<div className="flex flex-row bg-white h-full text-black dark:text-white dark:bg-gray-900">
       {sideBar()}
       <div className="relative flex flex-col flex-1 w-full h-full">
-          {videoPreview()}
+        {videoPreview(true)}
         {videoSpecs()}
         {progressBar()}
       </div>
