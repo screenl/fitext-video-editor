@@ -1,27 +1,19 @@
-import React, { useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { setVideoState, videoState } from './video_state';
+import { OnProgressProps } from 'react-player/base';
+const ReactPlayer = dynamic(() => import("react-player"), { ssr: false }); 
 
-export function videoPreview(playing: boolean){
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [stop, setStop] = useState(false);
-
-  const handleVideo = () => {
-      setStop(!stop);
-      if (stop === true) {
-          videoRef.current!.pause();
-      } else {
-          videoRef.current!.play();
-      }
-  };
-
-  /* the above is for testing only and should not be included in the interface */
+export function videoPreview(state: videoState,setstate: setVideoState){
 
   return (
     <div className="z-0 flex items-center absolute w-full h-full">
       <div className="flex justify-center w-full h-[70%]">
-        <video ref={videoRef}>
-          <source src="demo_video.mp4"></source>
-        </video>
-        {/* <img className="object-contain " src="your-lucky-i-dont-hurt-you.gif"></img> */}
+      <ReactPlayer width="90%" height="100%" url='demo_video.mp4' 
+        playing={state.playing}
+        onProgress={(statep:OnProgressProps) => {
+          setstate({...state,progress:statep.playedSeconds});
+        }}
+        />
       </div>
     </div>
   )

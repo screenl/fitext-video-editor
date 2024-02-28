@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import player from "../Components/video_player";
-import {videoState} from "../Components/video_player";
+import { videoState } from "~/Components/video_state";
 import { useState,useEffect } from "react";
 
 
 export default function HomePage() {
 
-  const [vs,setvs] = useState({time:1000,progress:400,workout_desc:"Legs Curls glutes"});
+  const [vs,setvs] = useState({time:17,progress:0,workout_desc:"Legs Curls glutes",playing:false});
   /* 
   testing
 
@@ -26,7 +26,7 @@ export default function HomePage() {
           Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
 
         </h1>
-        <div className="w-[975px] h-[450px] aspect-video">{player(vs)}</div>
+        <div className="w-[975px] h-[450px] aspect-video">{player(vs,setvs)}</div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
         </div>
       </div>

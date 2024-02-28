@@ -1,23 +1,19 @@
 import { videoPreview } from "./video_preview";
+import { videoState, setVideoState } from "./video_state";
 
-export interface videoState {
-  time: number
-  progress: number
-  workout_desc: string
-}
 
 function secs_to_mmss(t:number){
   return new Date(t * 1000).toISOString().slice(14, 19);
 }
 
-export default function player(state: videoState){
+export default function player(state: videoState,setstate: setVideoState){
 
   function progressBar(){
-    let percentage = (Math.floor((state.progress / state.time) * 100)).toString()+'%';
+    let percentage = ((state.progress / state.time) * 100).toString()+'%';
     
     return (
       
-        <div className="flex flex-row w-full h-5 mt-4 mb-2">
+        <div className="z-10 flex flex-row w-full h-5 mt-4 mb-2">
           <div className="font-sans font-bold text-base h-sm w-20 ml-4 leading-none">  
             <p>{secs_to_mmss(state.progress)}</p>
           </div>
@@ -34,7 +30,7 @@ export default function player(state: videoState){
       <div className="basis-1/3 flex justify-center content-center">
         <img src="arr.svg" className="w-9/12 scale-x-[-1] rotate-90 opacity-30 dark:invert"></img>
       </div>
-      <div className="basis-1/3 flex justify-center content-center">
+      <div className="basis-1/3 flex justify-center content-center" onClick={()=>{setstate({...state,playing:!state.playing})}}>
         <img src="pause.svg" className="w-5/12 rotate-90 opacity-30 dark:invert"></img>
       </div>
 
@@ -55,7 +51,7 @@ export default function player(state: videoState){
   return (<div className="flex flex-row bg-white h-full text-black dark:text-white dark:bg-gray-900">
       {sideBar()}
       <div className="relative flex flex-col flex-1 w-full h-full">
-        {videoPreview(true)}
+        {videoPreview(state,setstate)}
         {videoSpecs()}
         {progressBar()}
       </div>
