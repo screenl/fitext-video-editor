@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Upload and Player</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <form class="upload-form">
+    <label for="video-upload">Upload your video</label>
+    <input type="file" id="video-upload" accept="video/*">
+    <button type="submit">Upload Video</button>
+  </form>
+</div>
+
+</body>
+</html>
