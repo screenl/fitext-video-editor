@@ -7,13 +7,17 @@
 </head>
 <body>
 
-<div class="container">
-  <form class="upload-form">
-    <label for="video-upload">Upload your video</label>
-    <input type="file" id="video-upload" accept="video/*">
-    <button type="submit">Upload Video</button>
-  </form>
-</div>
+  <div class="container">
+    <form class="upload-form" onsubmit="event.preventDefault();">
+      <label for="video-upload">Upload your video</label>
+      <input type="file" id="video-upload" accept="video/*" onchange="displayVideoName()">
+      <span id="video-name"></span>
+      <button type="submit">Upload Video</button>
+    </form>
+  </div>
 
-/body>
+  <script src="script.js"></script>
+
+
+</body>
 </html>

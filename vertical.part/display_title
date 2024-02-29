@@ -1,0 +1,10 @@
+function displayVideoName() {
+  var input = document.getElementById("video-upload");
+  var videoNameElement = document.getElementById("video-name");
+  if (input.files.length > 0) {
+    var fileName = input.files[0].name;
+    videoNameElement.textContent = "Selected Video: " + fileName;
+  } else {
+    videoNameElement.textContent = "";
+  }
+}
