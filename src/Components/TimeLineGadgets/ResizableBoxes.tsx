@@ -8,40 +8,48 @@ export function Boxes() {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="flex min-h-52 min-w-[800px] flex-row rounded-lg border"
+      className="flex w-full flex-col rounded-lg border"
     >
-      <ResizablePanel defaultSize={30}>
-        <div className=" flex flex-col items-center justify-center ">
-          <div className="divider divider-info"></div>
+      <ResizablePanel
+        defaultSize={30}
+        className="grid grid-rows-4 justify-items-stretch divide-y"
+      >
+        <div className="flex items-center justify-center text-center">
           <button className="btn btn-circle btn-outline btn-info text-2xl">
             +
           </button>
-          <div className="divider divider-info"></div>
-          <span className="font-semibold">Sets</span>
-          <div className="divider divider-info"></div>
-          <span className="font-semibold">Reps</span>
-          <div className="divider divider-info"></div>
-          <span className="font-semibold">Duration</span>
-          <div className="divider divider-info"></div>
         </div>
+        <span className="flex items-center justify-center text-center font-semibold">
+          Sets
+        </span>
+        <span className="flex items-center justify-center text-center font-semibold">
+          Reps
+        </span>
+        <span className="flex items-center justify-center text-center font-semibold">
+          Duration
+        </span>
       </ResizablePanel>
 
       <ResizableHandle withHandle />
 
-      <ResizablePanel defaultSize={20}>
-        <div className=" flex h-auto flex-col items-center justify-center ">
-          <div className="divider divider-info"></div>
+      <ResizablePanel
+        defaultSize={70}
+        className="grid grid-rows-4 justify-items-stretch divide-y"
+      >
+        <div className="flex items-center justify-center text-center">
           <button className="btn btn-circle btn-outline btn-info text-2xl">
             +
           </button>
-          <div className="divider divider-info"></div>
-          <span className="font-semibold">Sets</span>
-          <div className="divider divider-info"></div>
-          <span className="font-semibold">Reps</span>
-          <div className="divider divider-info"></div>
-          <span className="font-semibold">Duration</span>
-          <div className="divider divider-info"></div>
         </div>
+        <span className="flex items-center justify-center text-center font-semibold">
+          Sets
+        </span>
+        <span className="flex items-center justify-center text-center font-semibold">
+          Reps
+        </span>
+        <span className="flex items-center justify-center text-center font-semibold">
+          Duration
+        </span>
       </ResizablePanel>
     </ResizablePanelGroup>
   );
