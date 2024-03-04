@@ -30,27 +30,6 @@ const events: TimeLineEvent[] = [
   // Add more events as needed
 ];
 
-import { Rows } from "./TimeLineGadgets/rows";
-
-export default function TimeLine() {
-  return (
-    <div>
-      {events.map((event) => (
-        <div key={event.id} style={{ marginBottom: "20px" }}>
-          <h3>
-            {event.date} - {event.activity}
-          </h3>
-          <p>Duration: {event.duration}</p>
-          <p>Notes: {event.notes}</p>
-        </div>
-      ))}
-      <Boxes></Boxes>
-    <div className="">
-      <Boxes progress={progress} videoDuration={videoDuration} />
-    </div>
-  );
-}
-
 function Boxes({ progress, videoDuration }) {
   const filledBoxes = Math.floor((progress / videoDuration) * 100);
   const emptyBoxes = 100 - filledBoxes;
@@ -67,11 +46,34 @@ function Boxes({ progress, videoDuration }) {
         .map((_, index) => (
           <div key={index} className="box empty" />
         ))}
-    <div className="flex flex-row justify-center ">
-    <div className="flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
-      <Rows></Rows>
-      <div className="flex flex-row content-stretch">
-        <Boxes></Boxes>
+    </div>
+  );
+}
+
+export default function TimeLine() {
+  return (
+    <div>
+      {events.map((event) => (
+        <div key={event.id} style={{ marginBottom: "20px" }}>
+          <h3>
+            {event.date} - {event.activity}
+          </h3>
+          <p>Duration: {event.duration}</p>
+          <p>Notes: {event.notes}</p>
+        </div>
+      ))}
+      <Boxes></Boxes>
+      <div className="">
+        <Boxes progress={progress} videoDuration={videoDuration} />
+      </div>
+
+      <div className="flex flex-row justify-center ">
+        <div className="flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
+          <Rows></Rows>
+          <div className="flex flex-row content-stretch">
+            <Boxes></Boxes>
+          </div>
+        </div>
       </div>
     </div>
   );

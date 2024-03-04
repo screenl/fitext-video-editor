@@ -38,9 +38,9 @@ export default function HomePage() {
       <div className="m-20 flex justify-center">
         <TimeLine></TimeLine>
       </div>
+      <div className="flex flex-col justify-stretch">
+        <TimeLine></TimeLine>
+      </div>
     </main>
-    <div className="flex flex-col justify-stretch">
-      <TimeLine></TimeLine>
-    </div>
   );
 }
