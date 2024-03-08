@@ -1,6 +1,6 @@
 import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
+import { Rows } from "./TimeLineGadgets/rows";
 import React from "react";
-import React, { useState, useEffect } from "react";
 
 // Define the structure of a single event
 interface TimeLineEvent {
@@ -30,7 +30,7 @@ const events: TimeLineEvent[] = [
   // Add more events as needed
 ];
 
-function Boxes({ progress, videoDuration }) {
+/* function Boxes({ progress, videoDuration }) {
   const filledBoxes = Math.floor((progress / videoDuration) * 100);
   const emptyBoxes = 100 - filledBoxes;
 
@@ -48,12 +48,12 @@ function Boxes({ progress, videoDuration }) {
         ))}
     </div>
   );
-}
+}  */
 
 export default function TimeLine() {
   return (
     <div>
-      {events.map((event) => (
+      {/* {events.map((event) => (
         <div key={event.id} style={{ marginBottom: "20px" }}>
           <h3>
             {event.date} - {event.activity}
@@ -61,14 +61,10 @@ export default function TimeLine() {
           <p>Duration: {event.duration}</p>
           <p>Notes: {event.notes}</p>
         </div>
-      ))}
-      <Boxes></Boxes>
-      <div className="">
-        <Boxes progress={progress} videoDuration={videoDuration} />
-      </div>
+      ))} */}
 
-      <div className="flex flex-row justify-center ">
-        <div className="flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
+      <div className="flex flex-row justify-center bg-white text-black">
+        <div className="w-full flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
           <Rows></Rows>
           <div className="flex flex-row content-stretch">
             <Boxes></Boxes>
