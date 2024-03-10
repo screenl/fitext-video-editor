@@ -1,3 +1,4 @@
+import React, { useState } from "react"; // Merged React imports and removed unused import
 import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
 import { Rows } from "./TimeLineGadgets/rows";
 import React from "react";
