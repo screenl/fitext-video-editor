@@ -1,6 +1,4 @@
-import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
-import React from "react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react"; // Merged React imports and removed unused import
 
 // Define the structure of a single event
 interface TimeLineEvent {
@@ -30,7 +28,7 @@ const events: TimeLineEvent[] = [
   // Add more events as needed
 ];
 
-function Boxes({ progress, videoDuration }) {
+function Boxes({ progress, videoDuration }: { progress: number; videoDuration: number }) {
   const filledBoxes = Math.floor((progress / videoDuration) * 100);
   const emptyBoxes = 100 - filledBoxes;
 
@@ -51,6 +49,12 @@ function Boxes({ progress, videoDuration }) {
 }
 
 export default function TimeLine() {
+  // Example state for video progress and duration
+  const [videoDuration] = useState(100); // Placeholder values
+
+  // Placeholder for Rows component definition if needed
+  // const Rows = ...
+
   return (
     <div>
       {events.map((event) => (
@@ -62,19 +66,36 @@ export default function TimeLine() {
           <p>Notes: {event.notes}</p>
         </div>
       ))}
-      <Boxes></Boxes>
+      {/* Corrected usage of Boxes with required props */}
       <div className="">
-        <Boxes progress={progress} videoDuration={videoDuration} />
+        <Boxes progress={0} videoDuration={0} />
       </div>
 
-      <div className="flex flex-row justify-center ">
-        <div className="flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
-          <Rows></Rows>
-          <div className="flex flex-row content-stretch">
-            <Boxes></Boxes>
+      const progress = 0;
+      const videoDuration = 0;
+
+      return (
+        const progress = 0;
+        const videoDuration = 0;
+
+        const progress: number = 0;
+        const videoDuration: number = 0;
+
+        return (
+          <div className="flex flex-row justify-center ">
+            <div className="flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
+              {/* Placeholder if Rows needs to be included */}
+              {/* <Rows></Rows> */}
+              <div className="flex flex-row content-stretch">
+                {/* Corrected usage of Boxes with required props */}
+                const progress: number = 0;
+                const videoDuration: number = 0;
+                <Boxes progress={0} videoDuration={videoDuration} />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        );
+      );
     </div>
   );
 }
