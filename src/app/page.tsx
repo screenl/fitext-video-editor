@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import player from "../Components/video_player";
-import { videoState } from "~/Components/video_state";
+import { videoState, setVideoState } from "~/Components/video_state";
 import { useState, useEffect } from "react";
 
 import TimeLine from "~/Components/TimeLine";
+import VideoUpload from "~/Components/VideoUpload";
 
 export default function HomePage() {
   const [vs, setvs] = useState({
@@ -14,7 +15,9 @@ export default function HomePage() {
     workout_desc: "Legs Curls glutes",
     playing: false,
   });
-  /* 
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+
+  /*
   testing
 
   useEffect(()=>{
@@ -31,11 +34,12 @@ export default function HomePage() {
           Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
         </h1>
         <div className="aspect-video h-[450px] w-[975px]">
-          {player(vs, setvs)}
+          {player(vs, setvs, videoUrl)}
         </div>
         <div className="h-[300px] w-[975px]">
           {TimeLine()}
         </div>
+        <VideoUpload onVideoUpload={setVideoUrl}></VideoUpload>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8"></div>
       </div>
     </main>

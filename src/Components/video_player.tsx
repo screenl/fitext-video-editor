@@ -6,8 +6,7 @@ function secs_to_mmss(t:number){
   return new Date(t * 1000).toISOString().slice(14, 19);
 }
 
-export default function player(state: videoState,setstate: setVideoState){
-
+export default function player(state: videoState,setstate: setVideoState, url?: string | null){
   function progressBar(){
     let percentage = ((state.progress / state.time) * 100).toString()+'%';
     
@@ -51,7 +50,7 @@ export default function player(state: videoState,setstate: setVideoState){
   return (<div className="flex flex-row bg-white h-full text-black dark:text-white dark:bg-gray-900">
       {sideBar()}
       <div className="relative flex flex-col flex-1 w-full h-full">
-        {videoPreview(state,setstate)}
+        {videoPreview(state, setstate, url)}
         {videoSpecs()}
         {progressBar()}
       </div>
