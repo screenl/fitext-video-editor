@@ -1,6 +1,7 @@
 import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
 import { Rows } from "./TimeLineGadgets/rows";
 import React from "react";
+import CurrentFramePole from "./TimeLineGadgets/timebar";
 
 // Define the structure of a single event
 interface TimeLineEvent {
@@ -64,10 +65,12 @@ export default function TimeLine() {
       ))} */}
 
       <div className="flex flex-row justify-center bg-white text-black">
-        <div className="w-full flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
+        <div className="w-full flex h-64 flex-row content-stretch items-stretch overflow-x-auto"> 
           <Rows></Rows>
-          <div className="flex flex-row content-stretch">
+          <div className="flex flex-row content-stretch relative w-full">
+            {CurrentFramePole([1,10],2)}
             <Boxes></Boxes>
+            
           </div>
         </div>
       </div>
