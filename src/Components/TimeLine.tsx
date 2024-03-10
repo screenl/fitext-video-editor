@@ -51,6 +51,12 @@ const events: TimeLineEvent[] = [
 }  */
 
 export default function TimeLine() {
+  // Example state for video progress and duration
+  const [videoDuration] = useState(100); // Placeholder values
+
+  // Placeholder for Rows component definition if needed
+  // const Rows = ...
+
   return (
     <div>
       {/* {events.map((event) => (
@@ -64,7 +70,7 @@ export default function TimeLine() {
       ))} */}
 
       <div className="flex flex-row justify-center bg-white text-black">
-        <div className="w-full flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
+        <div className="flex h-64 w-full flex-row content-stretch items-stretch overflow-x-auto">
           <Rows></Rows>
           <div className="flex flex-row content-stretch">
             <Boxes></Boxes>
