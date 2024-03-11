@@ -33,8 +33,15 @@ export default function HomePage() {
         <div className="aspect-video h-[450px] w-[975px]">
           {player(vs, setvs)}
         </div>
-        <div className="h-[300px] w-[975px]">
-          {TimeLine()}
+        <div className="h-[250 px] flex flex-row ">
+          <div className="w-[850px]">{TimeLine()}</div>
+
+          {/* The div for the buttons on the right */}
+          <div className=" flex flex-col overflow-hidden bg-white">
+            <button className="w-50 btn btn-info m-5">Add Exercise +</button>
+            {/* For Jack and Pavel: Feel free to change the below button */}
+            <button className="w-50 btn btn-warning m-5">Add Video</button>
+          </div>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8"></div>
       </div>
