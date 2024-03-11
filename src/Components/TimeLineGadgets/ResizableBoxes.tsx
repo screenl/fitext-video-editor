@@ -6,10 +6,10 @@ import {
 
 export function Boxes() {
   return (
-    <div className="relative w-[5000px]">
+    <div className="h-full w-[1000px]">
       <ResizablePanelGroup
         direction="horizontal"
-        className="flex h-full flex-col rounded-lg border"
+        className="flex-col rounded-lg border"
       >
         <ResizablePanel
           defaultSize={30}
