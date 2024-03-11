@@ -70,10 +70,10 @@ export default function TimeLine() {
       ))} */}
 
       <div className="flex justify-center bg-white text-black">
-        <div className="flex h-64 w-full content-stretch items-stretch overflow-x-auto">
-          <Rows></Rows>
-          <div className="flex flex-1 overflow-x-scroll">
-            <Boxes></Boxes>
+        <div className="flex w-full">
+          <Rows />
+          <div className="flex-1 overflow-x-scroll">
+            <Boxes />
           </div>
         </div>
       </div>
