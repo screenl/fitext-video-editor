@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
 import { Rows } from "./TimeLineGadgets/rows";
 import React from "react";
+=======
+import React, { useState } from "react"; // Merged React imports and removed unused import
+>>>>>>> 7664f34d6b9f580ec28fd9296c432eecc7b023cc
 
 // Define the structure of a single event
 interface TimeLineEvent {
@@ -30,7 +34,11 @@ const events: TimeLineEvent[] = [
   // Add more events as needed
 ];
 
+<<<<<<< HEAD
 /* function Boxes({ progress, videoDuration }) {
+=======
+function Boxes({ progress, videoDuration }: { progress: number; videoDuration: number }) {
+>>>>>>> 7664f34d6b9f580ec28fd9296c432eecc7b023cc
   const filledBoxes = Math.floor((progress / videoDuration) * 100);
   const emptyBoxes = 100 - filledBoxes;
 
@@ -67,6 +75,7 @@ export default function TimeLine() {
           <p>Duration: {event.duration}</p>
           <p>Notes: {event.notes}</p>
         </div>
+<<<<<<< HEAD
       ))} */}
 
       <div className="flex flex-row justify-center bg-white text-black">
@@ -74,9 +83,39 @@ export default function TimeLine() {
           <Rows></Rows>
           <div className="flex flex-row content-stretch">
             <Boxes></Boxes>
-          </div>
-        </div>
+=======
+      ))}
+      {/* Corrected usage of Boxes with required props */}
+      <div className="">
+        <Boxes progress={0} videoDuration={0} />
       </div>
+
+      const progress = 0;
+      const videoDuration = 0;
+
+      return (
+        const progress = 0;
+        const videoDuration = 0;
+
+        const progress: number = 0;
+        const videoDuration: number = 0;
+
+        return (
+          <div className="flex flex-row justify-center ">
+            <div className="flex h-64 flex-row content-stretch items-stretch overflow-x-auto">
+              {/* Placeholder if Rows needs to be included */}
+              {/* <Rows></Rows> */}
+              <div className="flex flex-row content-stretch">
+                {/* Corrected usage of Boxes with required props */}
+                const progress: number = 0;
+                const videoDuration: number = 0;
+                <Boxes progress={0} videoDuration={videoDuration} />
+              </div>
+            </div>
+>>>>>>> 7664f34d6b9f580ec28fd9296c432eecc7b023cc
+          </div>
+        );
+      );
     </div>
   );
 }
