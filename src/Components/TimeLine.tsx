@@ -72,7 +72,7 @@ export default function TimeLine() {
       <div className="flex justify-center bg-white text-black">
         <div className="flex w-full">
           <Rows />
-          <div className="flex-1 overflow-x-scroll">
+          <div className="hide-scrollbar flex-1 overflow-x-scroll">
             <Boxes />
           </div>
         </div>
