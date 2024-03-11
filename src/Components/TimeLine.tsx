@@ -1,7 +1,6 @@
 import React, { useState } from "react"; // Merged React imports and removed unused import
 import { Boxes } from "./TimeLineGadgets/ResizableBoxes";
 import { Rows } from "./TimeLineGadgets/rows";
-import React from "react";
 
 // Define the structure of a single event
 interface TimeLineEvent {
@@ -53,7 +52,7 @@ const events: TimeLineEvent[] = [
 
 export default function TimeLine() {
   // Example state for video progress and duration
-  const [videoDuration] = useState(100); // Placeholder values
+  // const [videoDuration] = useState(100); // Placeholder values
 
   // Placeholder for Rows component definition if needed
   // const Rows = ...
