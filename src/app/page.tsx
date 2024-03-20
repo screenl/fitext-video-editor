@@ -1,31 +1,25 @@
 "use client"; // This is a client component 👈🏽
 
-import Link from "next/link";
 import player from "../Components/video_player";
-import { videoState, setVideoState } from "~/Components/video_state";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import TimeLine from "~/Components/TimeLine";
-import VideoUpload from "~/Components/VideoUpload";
+import VideoUploadButton from "~/Components/VideoUploadButton";
+import AddExcersiseButton from "~/Components/AddExcersiseButton";
 
 export default function HomePage() {
   const [vs, setvs] = useState({
-    time: 17,
+    time: 1,
     progress: 0,
-    workout_desc: "Legs Curls glutes",
+    workout_desc: "",
     playing: false,
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  /*
-  testing
-
-  useEffect(()=>{
-    const interval = setInterval(()=>{
-      setvs({...vs,progress:(vs.progress+1)%vs.time} as videoState);
-    },1)
-    return () => clearInterval(interval);
-  },[vs]); */
+  const [exercises, setExercises] = useState<Array<{reps: number, sets: number, time: number}>>([]);
+  const addExercise = () => {
+    setExercises([...exercises, { reps: 0, sets: 0, time: 0}]);
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
@@ -37,16 +31,16 @@ export default function HomePage() {
           {player(vs, setvs, videoUrl)}
         </div>
         <div className="h-[250 px] flex flex-row ">
-          <div className="w-[850px]">{TimeLine()}</div>
+          <div className="w-[850px]">
+              <TimeLine exercises={exercises}/>
+          </div>
 
           {/* The div for the buttons on the right */}
           <div className=" flex flex-col overflow-hidden bg-white">
-            <button className="w-50 btn btn-info m-5">Add Exercise +</button>
-            {/* For Jack and Pavel: Feel free to change the below button */}
-            <button className="w-50 btn btn-warning m-5">Add Video</button>
+              <AddExcersiseButton addExercise={addExercise}/>
+              <VideoUploadButton onVideoUpload={setVideoUrl}/>
           </div>
         </div>
-        <VideoUpload onVideoUpload={setVideoUrl}></VideoUpload>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8"></div>
       </div>
     </main>

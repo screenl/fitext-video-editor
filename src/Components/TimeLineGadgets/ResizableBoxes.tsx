@@ -1,78 +1,51 @@
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "../ui/resizable";
+import React from 'react';
+import { ResizableHandle, ResizablePanelGroup } from "../ui/resizable";
+import ResizableBox from './ResizableBox'; // import the new component
+// import Exercise from './Exercise'; // import the Exercise component
 
-export function Boxes() {
+interface BoxesProps {
+    exercises: Array<{reps: number, sets: number, time: number}>;
+}
+
+const Boxes: React.FC<BoxesProps> = ({exercises}) => {
   return (
-    <div className="h-full w-[1000px]">
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="flex-col rounded-lg border"
-      >
-        <ResizablePanel
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
+      <div className="h-full w-[1000px]">
+        <ResizablePanelGroup
+            direction="horizontal"
+            className="flex-col rounded-lg border"
         >
-          <div className="flex items-center justify-center text-center">
-            <button className="btn btn-circle btn-outline btn-info text-2xl">
-              +
-            </button>
-          </div>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Sets
-          </span>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Reps
-          </span>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Duration
-          </span>
-        </ResizablePanel>
+          <ResizableBox defaultSize={30} className="grid grid-rows-4 justify-items-stretch divide-y" reps={30} sets={3} time={30}>
+            {/*<Exercise />*/}
+          </ResizableBox>
 
-        <ResizableHandle withHandle />
+          <ResizableHandle withHandle />
 
-        <ResizablePanel
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
-        >
-          <div className="flex items-center justify-center text-center">
-            <button className="btn btn-circle btn-outline btn-info text-2xl">
-              +
-            </button>
-          </div>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Sets
-          </span>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Reps
-          </span>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Duration
-          </span>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
-        >
-          <div className="flex items-center justify-center text-center">
-            <button className="btn btn-circle btn-outline btn-info text-2xl">
-              +
-            </button>
-          </div>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Sets
-          </span>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Reps
-          </span>
-          <span className="flex items-center justify-center text-center font-semibold">
-            Duration
-          </span>
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </div>
+          <ResizableBox defaultSize={30} className="grid grid-rows-4 justify-items-stretch divide-y" reps={30} sets={3} time={30}>
+            {/*<Exercise />*/}
+          </ResizableBox>
+
+          <ResizableHandle withHandle />
+
+          <ResizableBox defaultSize={30} className="grid grid-rows-4 justify-items-stretch divide-y" reps={30} sets={3} time={30}>
+            {/*<Exercise />*/}
+          </ResizableBox>
+
+        {/*  TODO: Refactor this one: */}
+        {/*  render resizable box for each exercise in array */}
+          {exercises.map((exercise, index) => (
+              <>
+                <ResizableHandle withHandle/>
+                <ResizableBox key={index} defaultSize={30}
+                   className="grid grid-rows-4 justify-items-stretch divide-y"
+                   reps={exercise.reps} sets={exercise.sets}
+                   time={exercise.time}>
+                  {/*<Exercise />*/}
+                </ResizableBox>
+              </>
+          ))}
+        </ResizablePanelGroup>
+      </div>
   );
 }
+
+export default Boxes;

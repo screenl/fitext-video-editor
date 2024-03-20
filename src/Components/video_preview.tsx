@@ -15,9 +15,12 @@ export function videoPreview(state: videoState, setstate: setVideoState, url?: s
           <ReactPlayer width="90%" height="100%" url={url ?? ""}
             playing={state.playing}
             onProgress={(statep:OnProgressProps) => {
-              setstate({...state,progress:statep.playedSeconds});
+                setstate({...state,progress:statep.playedSeconds});
             }}
-            />
+            onReady={(player) => {
+               setstate({...state, time:player.getDuration(), progress:0, playing:false});
+            }}
+          />
           </div>
         </div>
     )

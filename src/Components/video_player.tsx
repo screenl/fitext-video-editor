@@ -8,16 +8,13 @@ function secs_to_mmss(t:number){
 
 export default function player(state: videoState,setstate: setVideoState, url?: string | null){
   function progressBar(){
-    let percentage = ((state.progress / state.time) * 100).toString()+'%';
-    
     return (
-      
         <div className="z-10 flex flex-row w-full h-5 mt-4 mb-2">
           <div className="font-sans font-bold text-base h-sm w-20 ml-4 leading-none">  
             <p>{secs_to_mmss(state.progress)}</p>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3 dark:bg-gray-700 mr-4">
-            <div className="bg-blue-600 h-3 rounded-full " style={{width: percentage}}></div>
+            <div className="bg-blue-600 h-3 rounded-full " style={{width: `${((state.progress / state.time) * 100)}%`}}></div>
           </div>
         </div>
       
