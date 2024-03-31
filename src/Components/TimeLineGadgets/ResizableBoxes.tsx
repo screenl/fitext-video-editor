@@ -10,10 +10,35 @@ interface BoxesProps {
 const Boxes: React.FC<BoxesProps> = ({ exercises }) => {
   const [width, setWidth] = useState(200);
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    const container = event.currentTarget;
+    const containerRect = container.getBoundingClientRect();
+    const cursorXRelativeToContainer = event.clientX - containerRect.left;
+    const cursorRatio = cursorXRelativeToContainer / containerRect.width;
+
     const delta = event.deltaY;
     const newWidth = width + delta;
-    setWidth(newWidth);
+
+    // Calculate the new width and ensure minimum width
+    let adjustedWidth;
+    if (newWidth < 100) {
+      adjustedWidth = 100;
+    } else {
+      adjustedWidth = newWidth;
+    }
+
+    // Calculate the new scrollLeft position to keep the cursor centered
+    const newScrollLeft =
+      container.scrollLeft + (adjustedWidth - width) * cursorRatio;
+
+    // Update width and scrollLeft
+    setWidth(adjustedWidth);
+    container.scrollLeft = newScrollLeft;
+
+    console.log("New", newScrollLeft);
+
+    console.log("ScrollLeft:", container.scrollLeft);
   };
+
   return (
     <div
       className="h-full min-w-[800px]"
