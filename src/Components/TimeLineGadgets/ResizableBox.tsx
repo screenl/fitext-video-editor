@@ -1,14 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { ResizablePanel } from "../ui/resizable";
 
-// import {
-//     DropdownMenu,
-//     DropdownMenuContent,
-//     DropdownMenuItem,
-//     DropdownMenuLabel,
-//     DropdownMenuSeparator,
-//     DropdownMenuTrigger,
-// } from "~/Components/ui/dropdown-menu";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "~/Components/ui/popover"
+
 
 interface ResizableBoxProps {
     defaultSize: number;
@@ -21,6 +19,40 @@ interface ResizableBoxProps {
     onTimeChange: (value: number) => void;
     exercise?: null | React.ReactNode;
 }
+
+interface GridProps {
+    onClick: (gif: string) => void;
+}
+
+// TODO: Separate into a new component. Rename, refactor to be able to utilize exercise states properly.
+const Grid: React.FC<GridProps> = ({ onClick }) => {
+    const importAll = (r: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+        return r.keys().map(r);
+    }
+
+    const gifFiles = importAll(require.context('public/assets/exercises', false, /\.(gif)$/));
+
+    const [gifStates, setGifStates] = useState<string[]>(gifFiles);
+
+    useEffect(() => {
+        console.log(gifFiles);
+        // console.log(gifFiles[0]);
+        // setGifStates(gifFiles);
+    }, [gifFiles]);
+
+    // TODO: swap on relative position, stylize it better
+    return (
+        <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
+            {gifStates.map((gif) => (
+                <img src={gif.default.src} onClick={() => onClick(gif)} />
+            ))}
+            {/*{gifStates.map(gif => (*/}
+            {/*    {gif}*/}
+            {/*)}*/}
+        </div>
+    );
+};
 
 const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, exercise=null}) => {
     const handleRepsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,15 +70,16 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
     return (
         <ResizablePanel defaultSize={defaultSize} className={className}>
             <div className="flex items-center justify-center text-center">
-                {/*<DropdownMenu>*/}
-                {/*    <DropdownMenuTrigger asChild>*/}
-                {/*        {exercise === null*/}
-                {/*            ? <button className="btn btn-circle btn-outline btn-info text-2xl">+</button>*/}
-                {/*            : {exercise}*/}
-                {/*        }*/}
-
-                {/*    </DropdownMenuTrigger>*/}
-                {/*</DropdownMenu>*/}
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <button className="btn btn-circle btn-outline btn-info text-2xl">
+                            +
+                        </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-80">
+                        <Grid onClick={(gif) => console.log(gif)} />
+                    </PopoverContent>
+                </Popover>
             </div>
             <div className="flex items-center justify-center text-center">
                 <label>Reps: </label>

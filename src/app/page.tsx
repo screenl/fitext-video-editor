@@ -22,11 +22,11 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center text-white">
       <div className="container flex flex-col items-center justify-center px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
+        {/*<h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">*/}
+        {/*  Create <span className="text-[hsl(280,100%,70%)]">T3</span> App*/}
+        {/*</h1>*/}
         <div className="aspect-video h-[450px] w-[975px]">
           {player(vs, setvs, videoUrl)}
         </div>
@@ -41,7 +41,7 @@ export default function HomePage() {
               <VideoUploadButton onVideoUpload={setVideoUrl}/>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8"></div>
+        {/*<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8"></div>*/}
       </div>
     </main>
   );
