@@ -16,9 +16,9 @@ export default function HomePage() {
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const [exercises, setExercises] = useState<Array<{reps: number, sets: number, time: number}>>([]);
+  const [exercises, setExercisesState] = useState<Array<{reps: number, sets: number, time: number}>>([]);
   const addExercise = () => {
-    setExercises([...exercises, { reps: 0, sets: 0, time: 0}]);
+    setExercisesState([...exercises, { reps: 0, sets: 0, time: 0}]);
   };
 
   return (
@@ -32,7 +32,7 @@ export default function HomePage() {
         </div>
         <div className="h-[250 px] flex flex-row ">
           <div className="w-[850px]">
-              <TimeLine exercises={exercises}/>
+              <TimeLine exercises={exercises} setExercisesState={setExercisesState}/>
           </div>
 
           {/* The div for the buttons on the right */}
