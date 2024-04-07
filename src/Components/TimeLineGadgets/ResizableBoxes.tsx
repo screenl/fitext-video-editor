@@ -59,7 +59,7 @@ const Boxes: React.FC<BoxesProps> = ({ exercises }) => {
           {/*<Exercise />*/}
         </ResizableBox>
 
-        <ResizableHandle withHandle />
+        <ResizableHandle withHandle pinid={1} color="green"/>
 
         <ResizableBox
           defaultSize={30}
@@ -71,7 +71,7 @@ const Boxes: React.FC<BoxesProps> = ({ exercises }) => {
           {/*<Exercise />*/}
         </ResizableBox>
 
-        <ResizableHandle withHandle />
+        <ResizableHandle withHandle pinid={1} color="green"/>
 
         <ResizableBox
           defaultSize={30}
