@@ -47,7 +47,11 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
 
   function sizeSetter(index: number){
     return ((s: number)=>{
-      setExercises([...exercises,{id: index, size: s}]);
+      setExercises([...exercises.slice(0,index),
+        {...exercises[index],
+          size: s
+        },
+      ...exercises.slice(index+1,)]);
     });
   };
 
@@ -63,6 +67,7 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
       >
         <ResizableBox
           setSize={(_: number)=>{}}
+          key = {-1}
           defaultSize={30}
           className="grid grid-rows-4 justify-items-stretch divide-y"
           reps={30}
@@ -82,13 +87,13 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
           <>
             <ResizableHandle withHandle />
             <ResizableBox
-              setSize={sizeSetter(index)}
               key={index}
               defaultSize={30}
               className="grid grid-rows-4 justify-items-stretch divide-y"
               reps={exercise.reps}
               sets={exercise.sets}
               time={exercise.time}
+              setSize={/* sizeSetter(index) */ (_:number) => {}}
             >
               {/*<Exercise />*/}
             </ResizableBox>
