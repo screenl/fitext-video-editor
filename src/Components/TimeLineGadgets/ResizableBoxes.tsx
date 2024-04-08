@@ -65,17 +65,6 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
         direction="horizontal"
         className="flex-col rounded-lg border"
       >
-        <ResizableBox
-          setSize={(_: number)=>{}}
-          key = {0}
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
-          reps={30}
-          sets={3}
-          time={30}
-        >
-          {/*<Exercise />*/}
-        </ResizableBox>
 
 
 
@@ -92,7 +81,7 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
               reps={exercise.reps}
               sets={exercise.sets}
               time={exercise.time}
-              setSize={/* sizeSetter(index) */ (_:number) => {}}
+              setSize={sizeSetter(index)}
             >
               {/*<Exercise />*/}
             </ResizableBox>
