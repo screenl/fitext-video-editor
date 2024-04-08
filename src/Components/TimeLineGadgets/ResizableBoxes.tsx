@@ -45,11 +45,7 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
   function sizeSetter(index: number){
     return ((s: number)=>{
       console.log(index,exercises,s);
-      setExercises([...exercises.slice(0,index),
-        {...exercises[index],
-          size: s
-        },
-      ...exercises.slice(index+1,)]);
+      exercises[index].size = s;
     });
   };
 
