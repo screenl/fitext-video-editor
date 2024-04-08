@@ -39,14 +39,12 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
     // Update width and scrollLeft
     setWidth(adjustedWidth);
     container.scrollLeft = newScrollLeft;
-
-    console.log("New", newScrollLeft);
-
-    console.log("ScrollLeft:", container.scrollLeft);
+    console.log(exercises);
   };
 
   function sizeSetter(index: number){
     return ((s: number)=>{
+      console.log(index,exercises,s);
       setExercises([...exercises.slice(0,index),
         {...exercises[index],
           size: s
@@ -72,8 +70,6 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
         {/*  render resizable box for each exercise in array */}
         {exercises.map((exercise: { reps: any; sets: any; time: any; }, index: number) => (
           <>
-            <ResizableHandle 
-             />
             <ResizableBox
               key = {index+1}
               defaultSize={30}
@@ -85,6 +81,8 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
             >
               {/*<Exercise />*/}
             </ResizableBox>
+
+            <ResizableHandle />
           </>
         ))}
       </ResizablePanelGroup>
