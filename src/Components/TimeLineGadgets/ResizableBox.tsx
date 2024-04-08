@@ -10,9 +10,9 @@ interface ResizableBoxProps {
     exercise?: null | React.ReactNode;
 }
 
-const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , exercise=null}) => {
+const ResizableBox: React.FC<any> = ({defaultSize, className, reps, sets, time , exercise=null, setSize}) => {
     return (
-        <ResizablePanel defaultSize={defaultSize} className={className}>
+        <ResizablePanel defaultSize={defaultSize} className={className} onResize={(size,_)=>{setSize(size);}}>
             <div className="flex items-center justify-center text-center">
               <button className="btn btn-circle btn-outline btn-info text-2xl">
                 +
