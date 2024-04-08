@@ -67,7 +67,7 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
       >
         <ResizableBox
           setSize={(_: number)=>{}}
-          key = {-1}
+          key = {0}
           defaultSize={30}
           className="grid grid-rows-4 justify-items-stretch divide-y"
           reps={30}
@@ -77,17 +77,16 @@ const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
           {/*<Exercise />*/}
         </ResizableBox>
 
-        <ResizableHandle pinid={1} color="green"/>
-
 
 
         {/*  TODO: Refactor this one: */}
         {/*  render resizable box for each exercise in array */}
         {exercises.map((exercise: { reps: any; sets: any; time: any; }, index: number) => (
           <>
-            <ResizableHandle withHandle />
+            <ResizableHandle 
+             />
             <ResizableBox
-              key={index}
+              key = {index+1}
               defaultSize={30}
               className="grid grid-rows-4 justify-items-stretch divide-y"
               reps={exercise.reps}
