@@ -3,12 +3,18 @@ import { ResizableHandle, ResizablePanelGroup } from "../ui/resizable";
 import ResizableBox from "./ResizableBox"; // import the new component
 // import Exercise from './Exercise'; // import the Exercise component
 
-interface BoxesProps {
-  exercises: Array<{ reps: number; sets: number; time: number }>;
+export interface BoxesProps {
+  exercises: Array<{ 
+    reps: number; 
+    sets: number; 
+    time: number;
+    size: number;
+  }>;
 }
 
-const Boxes: React.FC<BoxesProps> = ({ exercises }) => {
-  const [width, setWidth] = useState(200);
+
+
+const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     const container = event.currentTarget;
     const containerRect = container.getBoundingClientRect();
@@ -33,10 +39,14 @@ const Boxes: React.FC<BoxesProps> = ({ exercises }) => {
     // Update width and scrollLeft
     setWidth(adjustedWidth);
     container.scrollLeft = newScrollLeft;
+    console.log(exercises);
+  };
 
-    console.log("New", newScrollLeft);
-
-    console.log("ScrollLeft:", container.scrollLeft);
+  function sizeSetter(index: number){
+    return ((s: number)=>{
+      console.log(index,exercises,s);
+      exercises[index].size = s;
+    });
   };
 
   return (
@@ -49,55 +59,26 @@ const Boxes: React.FC<BoxesProps> = ({ exercises }) => {
         direction="horizontal"
         className="flex-col rounded-lg border"
       >
-        <ResizableBox
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
-          reps={30}
-          sets={3}
-          time={30}
-        >
-          {/*<Exercise />*/}
-        </ResizableBox>
 
-        <ResizableHandle withHandle pinid={1} color="green"/>
 
-        <ResizableBox
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
-          reps={30}
-          sets={3}
-          time={30}
-        >
-          {/*<Exercise />*/}
-        </ResizableBox>
-
-        <ResizableHandle withHandle pinid={1} color="green"/>
-
-        <ResizableBox
-          defaultSize={30}
-          className="grid grid-rows-4 justify-items-stretch divide-y"
-          reps={30}
-          sets={3}
-          time={30}
-        >
-          {/*<Exercise />*/}
-        </ResizableBox>
 
         {/*  TODO: Refactor this one: */}
         {/*  render resizable box for each exercise in array */}
-        {exercises.map((exercise, index) => (
+        {exercises.map((exercise: { reps: any; sets: any; time: any; }, index: number) => (
           <>
-            <ResizableHandle withHandle />
             <ResizableBox
-              key={index}
+              key = {index+1}
               defaultSize={30}
               className="grid grid-rows-4 justify-items-stretch divide-y"
               reps={exercise.reps}
               sets={exercise.sets}
               time={exercise.time}
+              setSize={sizeSetter(index)}
             >
               {/*<Exercise />*/}
             </ResizableBox>
+
+            <ResizableHandle />
           </>
         ))}
       </ResizablePanelGroup>
