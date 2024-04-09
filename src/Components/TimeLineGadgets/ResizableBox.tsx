@@ -18,6 +18,7 @@ interface ResizableBoxProps {
     onSetsChange: (value: number) => void;
     onTimeChange: (value: number) => void;
     onExerciseChange: (value: string) => void;
+    setSize: any
     // exercise?: null | React.ReactNode;
 }
 
@@ -32,6 +33,7 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
         return r.keys().map(r);
     }
 
+const ResizableBox: React.FC<any> = ({defaultSize, className, reps, sets, time , exercise=null, setSize}) => {
     const gifFiles = importAll(require.context('public/assets/exercises', false, /\.(gif)$/));
 
     const [gifStates, setGifStates] = useState<string[]>(gifFiles);
@@ -53,7 +55,7 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
     );
 };
 
-const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, onExerciseChange}) => {
+const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, onExerciseChange, setSize}) => {
     const [exercise, setExercise] = useState<React.ReactNode | null>(null);
 
     const handleRepsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +71,12 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
     };
 
     return (
-        <ResizablePanel defaultSize={defaultSize} className={className}>
+        <ResizablePanel
+        defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
+          console.log(size,prev_size);
+          setSize(size);
+          //setSize(size*prev_size/100);
+        }}>
             <div className="flex items-center justify-center text-center">
                 <Popover>
                     <PopoverTrigger asChild>

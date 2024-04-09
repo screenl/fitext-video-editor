@@ -17,10 +17,12 @@ export default function HomePage() {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const [exercises, setExercisesState] = useState<Array<
-      {name: string, reps: number, sets: number, time: number}>>([]);
+      {name: string, reps: number, sets: number, time: number, size: number}>>([]);
   const addExercise = () => {
-    setExercisesState([...exercises, { name: 'jogging', reps: 0, sets: 0, time: 0}]);
+    setExercisesState([...exercises, { name: 'jogging', reps: 0, sets: 0, time: 0, size: 30}]);
   };
+
+  const [width, setWidth] = useState(200);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center text-white">
@@ -31,13 +33,13 @@ export default function HomePage() {
         <div className="aspect-video h-[450px] w-[975px]">
           {player(vs, setvs, videoUrl)}
         </div>
-        <div className="h-[250 px] flex flex-row ">
+        <div className="flex flex-row ">
           <div className="w-[850px]">
-              <TimeLine exercises={exercises} setExercisesState={setExercisesState}/>
+              <TimeLine exercises={exercises} setExercisesState={setExercisesState}, [width, setWidth]/>
           </div>
 
           {/* The div for the buttons on the right */}
-          <div className=" flex flex-col overflow-hidden bg-white">
+          <div className="flex flex-col overflow-hidden bg-white">
               <AddExcersiseButton addExercise={addExercise}/>
               <VideoUploadButton onVideoUpload={setVideoUrl}/>
           </div>
