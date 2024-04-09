@@ -15,7 +15,7 @@ const TimeLine: React.FC<TimeLineProps> = ({exercises, setExercisesState}) => {
       <div className="flex justify-center bg-white text-black">
         <div className="flex w-full">
           <Rows />
-          <div className="flex-1 overflow-x-scroll hover:overflow-x-auto focus:overflow-x-auto">
+          <div className="flex-1 overflow-x-auto hover:overflow-x-auto focus:overflow-x-auto">
             <Boxes exercises={exercises} setExercisesState={setExercisesState} />
           </div>
         </div>

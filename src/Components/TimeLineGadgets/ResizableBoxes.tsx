@@ -8,7 +8,7 @@ interface BoxesProps {
 }
 
 const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState}) => {
-    const handleExerciseChange = (index: number, field: string, value: number) => {
+    const handleExerciseChange = (index: number, field: string, value: number|string) => {
         const newExercisesState = [...exercises];
         exercises[index][field] = value;
         setExercisesState(newExercisesState);
@@ -24,13 +24,14 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState}) => {
           {exercises.map((exercise, index) => (
               <>
                   { index > 0 && index < exercises.length && <ResizableHandle withHandle/>}
-                  <ResizableBox key={index} defaultSize={30}
+                  <ResizableBox key={index} defaultSize={100}
                     className="grid grid-rows-4 justify-items-stretch divide-y"
                     reps={exercise.reps} sets={exercise.sets}
                     time={exercise.time}
                     onRepsChange={(value: number) => handleExerciseChange(index, 'reps', value)}
                     onSetsChange={(value: number) => handleExerciseChange(index, 'sets', value)}
                     onTimeChange={(value: number) => handleExerciseChange(index, 'time', value)}
+                    onExerciseChange={(value: string) => handleExerciseChange(index, 'name', value)}
                   >
                     {/*<Exercise />*/}
                   </ResizableBox>

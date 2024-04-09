@@ -17,7 +17,8 @@ interface ResizableBoxProps {
     onRepsChange: (value: number) => void;
     onSetsChange: (value: number) => void;
     onTimeChange: (value: number) => void;
-    exercise?: null | React.ReactNode;
+    onExerciseChange: (value: string) => void;
+    // exercise?: null | React.ReactNode;
 }
 
 interface GridProps {
@@ -37,8 +38,6 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
 
     useEffect(() => {
         console.log(gifFiles);
-        // console.log(gifFiles[0]);
-        // setGifStates(gifFiles);
     }, [gifFiles]);
 
     // TODO: swap on relative position, stylize it better
@@ -54,7 +53,9 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
     );
 };
 
-const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, exercise=null}) => {
+const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, onExerciseChange}) => {
+    const [exercise, setExercise] = useState<React.ReactNode | null>(null);
+
     const handleRepsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onRepsChange(Number(event.target.value));
     };
@@ -72,26 +73,34 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
             <div className="flex items-center justify-center text-center">
                 <Popover>
                     <PopoverTrigger asChild>
-                        <button className="btn btn-circle btn-outline btn-info text-2xl">
-                            +
-                        </button>
+                        { exercise ? (
+                            exercise
+                        ) : (
+                            <button className="btn btn-circle btn-outline btn-info text-2xl">
+                                +
+                            </button>
+                        ) }
                     </PopoverTrigger>
                     <PopoverContent className="w-80">
-                        <Grid onClick={(gif) => console.log(gif)} />
+                        <Grid onClick={(gif) => {
+                            onExerciseChange(gif.default.src.split('/').pop().split('.').shift());
+                            setExercise(<img src={gif.default.src} className={"max-h-20"} />);
+                            console.log(exercise);
+                        }} />
                     </PopoverContent>
                 </Popover>
             </div>
             <div className="flex items-center justify-center text-center">
-                <label>Reps: </label>
-                <input type="number" className="input" value={reps} onChange={handleRepsChange}/>
+                {/*<label>Reps: </label>*/}
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={reps} onChange={handleRepsChange}/>
             </div>
             <div className="flex items-center justify-center text-center">
-                <label>Sets: </label>
-                <input type="number" className="input" value={sets} onChange={handleSetsChange}/>
+                {/*<label>Sets: </label>*/}
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={sets} onChange={handleSetsChange}/>
             </div>
             <div className="flex items-center justify-center text-center">
-                <label>Duration: </label>
-                <input type="number" className="input" value={time} onChange={handleTimeChange}/>
+                {/*<label>Duration: </label>*/}
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={time} onChange={handleTimeChange}/>
             </div>
         </ResizablePanel>
     );

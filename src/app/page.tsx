@@ -16,9 +16,10 @@ export default function HomePage() {
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
-  const [exercises, setExercisesState] = useState<Array<{reps: number, sets: number, time: number}>>([]);
+  const [exercises, setExercisesState] = useState<Array<
+      {name: string, reps: number, sets: number, time: number}>>([]);
   const addExercise = () => {
-    setExercisesState([...exercises, { reps: 0, sets: 0, time: 0}]);
+    setExercisesState([...exercises, { name: 'jogging', reps: 0, sets: 0, time: 0}]);
   };
 
   return (
