@@ -18,7 +18,13 @@ export default function HomePage() {
 
   const [exercises, setExercises] = useState<Array<{reps: number, sets: number, time: number, size: number}>>([{ reps: 0, sets: 0, time: 0, size: 30}]);
   const addExercise = () => {
-    setExercises([...exercises, { reps: 0, sets: 0, time: 0, size: 30}]);
+    //
+    if(exercises.length == 0) {
+      setExercises([...exercises, { reps: 0, sets: 0, time: 0, size: 100}]);
+      return;
+    }
+    exercises[exercises.length-1]!.size /= 2;
+    setExercises([...exercises, { reps: 0, sets: 0, time: 0, size: exercises[exercises.length-1]!.size}]);
   };
 
   const [width, setWidth] = useState(200);

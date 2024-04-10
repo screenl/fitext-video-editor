@@ -13,6 +13,7 @@ interface ResizableBoxProps {
 const ResizableBox: React.FC<any> = ({defaultSize, className, reps, sets, time , exercise=null, setSize}) => {
     return (
         <ResizablePanel 
+        
         defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
           console.log(size,prev_size);
           setSize(size);
