@@ -32,8 +32,6 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         return r.keys().map(r);
     }
-
-const ResizableBox: React.FC<any> = ({defaultSize, className, reps, sets, time , exercise=null, setSize}) => {
     const gifFiles = importAll(require.context('public/assets/exercises', false, /\.(gif)$/));
 
     const [gifStates, setGifStates] = useState<string[]>(gifFiles);
@@ -46,14 +44,12 @@ const ResizableBox: React.FC<any> = ({defaultSize, className, reps, sets, time ,
     return (
         <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
             {gifStates.map((gif) => (
-                <img src={gif.default.src} onClick={() => onClick(gif)} />
+                <img src={gif.default.src} onClick={() => onClick(gif)}/>
             ))}
-            {/*{gifStates.map(gif => (*/}
-            {/*    {gif}*/}
-            {/*)}*/}
         </div>
     );
-};
+}
+
 
 const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, onExerciseChange, setSize}) => {
     const [exercise, setExercise] = useState<React.ReactNode | null>(null);
@@ -74,7 +70,7 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
         <ResizablePanel
         defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
           console.log(size,prev_size);
-          setSize(size);
+          setSize(size); 
           //setSize(size*prev_size/100);
         }}>
             <div className="flex items-center justify-center text-center">
@@ -98,15 +94,12 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
                 </Popover>
             </div>
             <div className="flex items-center justify-center text-center">
-                {/*<label>Reps: </label>*/}
                 <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={reps} onChange={handleRepsChange}/>
             </div>
             <div className="flex items-center justify-center text-center">
-                {/*<label>Sets: </label>*/}
                 <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={sets} onChange={handleSetsChange}/>
             </div>
             <div className="flex items-center justify-center text-center">
-                {/*<label>Duration: </label>*/}
                 <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={time} onChange={handleTimeChange}/>
             </div>
         </ResizablePanel>

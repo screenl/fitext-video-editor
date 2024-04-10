@@ -1,21 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { ResizableHandle, ResizablePanelGroup } from "../ui/resizable";
+// import { ResizableBox } from "./ResizableBox";
 import ResizableBox from './ResizableBox';
 
 interface BoxesProps {
     exercises: Array<{
+        name: string;
         reps: number;
         sets: number;
         time: number;
         size: number;
     }>;
-    setExercisesState: React.Dispatch<React.SetStateAction<{reps: number, sets: number, time: number}[]>>;
+    setExercisesState: React.Dispatch<React.SetStateAction<{name: string, reps: number, sets: number, time: number, size: number}[]>>;
+    width: number;
+    setWidth: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState}, [width, setWidth]) => {
-    const handleExerciseChange = (index: number, field: string, value: number|string) => {
+const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWidth}) => {
+    const handleExerciseChange = (index: number, field: 'name' | 'reps' | 'sets' | 'time' | 'size', value: number|string) => {
         const newExercisesState = [...exercises];
-        exercises[index][field] = value;
+        if (exercises[index]) {
+            exercises[index][field] = value;
+        }
         setExercisesState(newExercisesState);
     };
 
@@ -67,7 +73,7 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState}, [width, set
         >
           {exercises.map((exercise, index) => (
               <>
-                  { index > 0 && index < exercises.length && <ResizableHandle withHandle/>}
+                  { index > 0 && <ResizableHandle withHandle/>}
                   <ResizableBox key={index} defaultSize={100}
                     className="grid grid-rows-4 justify-items-stretch divide-y"
                     reps={exercise.reps} sets={exercise.sets}
@@ -76,10 +82,10 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState}, [width, set
                     onSetsChange={(value: number) => handleExerciseChange(index, 'sets', value)}
                     onTimeChange={(value: number) => handleExerciseChange(index, 'time', value)}
                     onExerciseChange={(value: string) => handleExerciseChange(index, 'name', value)}
+                    setSize={sizeSetter(index)}
                   >
-                    {/*<Exercise />*/}
                   </ResizableBox>
-                  <ResizableHandle />
+                  {/*<ResizableHandle />*/}
               </>
           ))}
         </ResizablePanelGroup>

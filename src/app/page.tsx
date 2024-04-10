@@ -26,7 +26,7 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center text-white">
-      <div className="container flex flex-col items-center justify-center px-4 py-16 ">
+      <div className="container flex flex-col items-center justify-center px-4">
         {/*<h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">*/}
         {/*  Create <span className="text-[hsl(280,100%,70%)]">T3</span> App*/}
         {/*</h1>*/}
@@ -35,7 +35,7 @@ export default function HomePage() {
         </div>
         <div className="flex flex-row ">
           <div className="w-[850px]">
-              <TimeLine exercises={exercises} setExercisesState={setExercisesState}, [width, setWidth]/>
+              <TimeLine exercises={exercises} setExercisesState={setExercisesState} width={width} setWidth={setWidth}/>
           </div>
 
           {/* The div for the buttons on the right */}
