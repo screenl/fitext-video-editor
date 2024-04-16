@@ -36,10 +36,6 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
 
     const [gifStates, setGifStates] = useState<string[]>(gifFiles);
 
-    useEffect(() => {
-        console.log(gifFiles);
-    }, [gifFiles]);
-
     // TODO: swap on relative position, stylize it better
     return (
         <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
@@ -69,7 +65,7 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
     return (
         <ResizablePanel
         defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
-          console.log(size,prev_size);
+          // console.log(size,prev_size);
           setSize(size); 
           //setSize(size*prev_size/100);
         }}>
@@ -86,9 +82,10 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
                     </PopoverTrigger>
                     <PopoverContent className="w-80">
                         <Grid onClick={(gif) => {
-                            onExerciseChange(gif.default.src.split('/').pop().split('.').shift());
-                            setExercise(<img src={gif.default.src} className={"max-h-20"} />);
-                            console.log(exercise);
+                            const exerciseName = gif.default.src.split('/').pop().split('.').shift();
+                            onExerciseChange(exerciseName);
+                            setExercise(<div><p>exerciseName</p><img src={gif.default.src} className={"max-h-20"} /></div>);
+                            // console.log(exercise);
                         }} />
                     </PopoverContent>
                 </Popover>

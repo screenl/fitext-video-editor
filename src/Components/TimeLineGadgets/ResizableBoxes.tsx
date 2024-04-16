@@ -49,12 +49,11 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
         // Update width and scrollLeft
         setWidth(adjustedWidth);
         container.scrollLeft = newScrollLeft;
-        console.log(exercises);
     };
 
     function sizeSetter(index: number){
         return ((s: number)=>{
-            console.log(index,exercises,s);
+            // console.log(index,exercises,s);
             exercises[index].size = s;
         });
     };

@@ -7,6 +7,25 @@ import TimeLine from "~/Components/TimeLine";
 import VideoUploadButton from "~/Components/VideoUploadButton";
 import AddExcersiseButton from "~/Components/AddExcersiseButton";
 
+interface MobilePreviewProps {
+  videoUrl: string | null,
+  setvs: (value: (((prevState: { workout_desc: string; progress: number; playing: boolean; time: number }) => {
+    workout_desc: string;
+    progress: number;
+    playing: boolean;
+    time: number
+  }) | { workout_desc: string; progress: number; playing: boolean; time: number })) => void,
+  vs: { workout_desc: string; progress: number; playing: boolean; time: number }
+}
+
+const MobilePreview: React.FC<MobilePreviewProps> = ({videoUrl, setvs, vs}) => {
+  return (
+      <div className="aspect-video h-[450px] w-[300px]">
+        {player(vs, setvs, videoUrl)}
+      </div>
+  );
+};
+
 export default function HomePage() {
   const [vs, setvs] = useState({
     time: 1,
@@ -25,7 +44,8 @@ export default function HomePage() {
   const [width, setWidth] = useState(200);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center text-white">
+    // <main className="flex min-h-screen flex-col items-center justify-center text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center px-4">
         {/*<h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">*/}
         {/*  Create <span className="text-[hsl(280,100%,70%)]">T3</span> App*/}
@@ -33,12 +53,16 @@ export default function HomePage() {
         <div className="aspect-video h-[450px] w-[975px]">
           {player(vs, setvs, videoUrl)}
         </div>
+        <MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />
+        {/*<div className="aspect-video h-[450px] w-[975px]">*/}
+        {/*  {player(vs, setvs, videoUrl)}*/}
+        {/*</div>*/}
+
         <div className="flex flex-row ">
           <div className="w-[850px]">
               <TimeLine exercises={exercises} setExercisesState={setExercisesState} width={width} setWidth={setWidth}/>
           </div>
 
-          {/* The div for the buttons on the right */}
           <div className="flex flex-col overflow-hidden bg-white">
               <AddExcersiseButton addExercise={addExercise}/>
               <VideoUploadButton onVideoUpload={setVideoUrl}/>
