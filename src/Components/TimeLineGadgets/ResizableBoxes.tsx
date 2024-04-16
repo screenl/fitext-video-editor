@@ -19,7 +19,7 @@ interface BoxesProps {
 const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWidth}) => {
     const handleExerciseChange = (index: number, field: 'name' | 'reps' | 'sets' | 'time' | 'size', value: number|string) => {
         const newExercisesState = [...exercises];
-        if (exercises[index]) {
+        if (index < exercises.length) {
             exercises[index][field] = value;
         }
         setExercisesState(newExercisesState);
@@ -51,12 +51,14 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
         container.scrollLeft = newScrollLeft;
     };
 
-    function sizeSetter(index: number){
+    const sizeSetter = (index: number) => {
         return ((s: number)=>{
             // console.log(index,exercises,s);
-            exercises[index].size = s;
+            if (index < exercises.length) {
+                exercises[index].size = s;
+            }
         });
-    };
+    }
 
     return (
         <div
@@ -73,7 +75,7 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
           {exercises.map((exercise, index) => (
               <>
                   { index > 0 && <ResizableHandle withHandle/>}
-                  <ResizableBox key={index} defaultSize={100}
+                  <ResizableBox key={index} defaultSize={exercise.size}
                     className="grid grid-rows-4 justify-items-stretch divide-y"
                     reps={exercise.reps} sets={exercise.sets}
                     time={exercise.time}
