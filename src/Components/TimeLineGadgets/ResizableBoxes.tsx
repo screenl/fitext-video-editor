@@ -89,6 +89,7 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
           ))}
         </ResizablePanelGroup>
       </div>
+
   );
 };
 

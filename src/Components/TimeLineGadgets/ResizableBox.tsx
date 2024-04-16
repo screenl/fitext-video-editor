@@ -38,6 +38,7 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
 
     // TODO: swap on relative position, stylize it better
     return (
+
         <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
             {gifStates.map((gif) => (
                 <img src={gif.default.src} onClick={() => onClick(gif)}/>
@@ -64,6 +65,7 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
 
     return (
         <ResizablePanel
+
         defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
           // console.log(size,prev_size);
           setSize(size); 
