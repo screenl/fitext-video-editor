@@ -1,5 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { ResizablePanel } from "../ui/resizable";
+
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "~/Components/ui/popover"
+
 
 interface ResizableBoxProps {
     defaultSize: number;
@@ -7,33 +14,91 @@ interface ResizableBoxProps {
     reps: number;
     sets: number;
     time: number;
-    exercise?: null | React.ReactNode;
+    onRepsChange: (value: number) => void;
+    onSetsChange: (value: number) => void;
+    onTimeChange: (value: number) => void;
+    onExerciseChange: (value: string) => void;
+    setSize: any
+    // exercise?: null | React.ReactNode;
 }
 
-const ResizableBox: React.FC<any> = ({defaultSize, className, reps, sets, time , exercise=null, setSize}) => {
+interface GridProps {
+    onClick: (gif: string) => void;
+}
+
+// TODO: Separate into a new component. Rename, refactor to be able to utilize exercise states properly.
+const Grid: React.FC<GridProps> = ({ onClick }) => {
+    const importAll = (r: unknown) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+        return r.keys().map(r);
+    }
+    const gifFiles = importAll(require.context('public/assets/exercises', false, /\.(gif)$/));
+
+    const [gifStates, setGifStates] = useState<string[]>(gifFiles);
+
+    // TODO: swap on relative position, stylize it better
     return (
-        <ResizablePanel 
-        
+        <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
+            {gifStates.map((gif) => (
+                <img src={gif.default.src} onClick={() => onClick(gif)}/>
+            ))}
+        </div>
+    );
+}
+
+
+const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, onExerciseChange, setSize}) => {
+    const [exercise, setExercise] = useState<React.ReactNode | null>(null);
+
+    const handleRepsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        onRepsChange(Number(event.target.value));
+    };
+
+    const handleSetsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        onSetsChange(Number(event.target.value));
+    };
+
+    const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        onTimeChange(Number(event.target.value));
+    };
+
+    return (
+        <ResizablePanel
         defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
-          console.log(size,prev_size);
-          setSize(size);
+          // console.log(size,prev_size);
+          setSize(size); 
           //setSize(size*prev_size/100);
         }}>
             <div className="flex items-center justify-center text-center">
-              <button className="btn btn-circle btn-outline btn-info text-2xl">
-                +
-              </button>
-                {exercise}
+                <Popover>
+                    <PopoverTrigger asChild>
+                        { exercise ? (
+                            exercise
+                        ) : (
+                            <button className="btn btn-circle btn-outline btn-info text-2xl">
+                                +
+                            </button>
+                        ) }
+                    </PopoverTrigger>
+                    <PopoverContent className="w-80">
+                        <Grid onClick={(gif) => {
+                            const exerciseName = gif.default.src.split('/').pop().split('.').shift().split('_').join(' ');
+                            onExerciseChange(exerciseName);
+                            setExercise(<div><p>{exerciseName}</p><img src={gif.default.src} className={"max-h-20"} /></div>);
+                            // console.log(exercise);
+                        }} />
+                    </PopoverContent>
+                </Popover>
             </div>
-            <span className="flex items-center justify-center text-center font-semibold">
-              Reps: {reps}
-            </span>
-            <span className="flex items-center justify-center text-center font-semibold">
-              Sets: {sets}
-            </span>
-            <span className="flex items-center justify-center text-center font-semibold">
-              Duration: {time}
-            </span>
+            <div className="flex items-center justify-center text-center">
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={reps} onChange={handleRepsChange}/>
+            </div>
+            <div className="flex items-center justify-center text-center">
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={sets} onChange={handleSetsChange}/>
+            </div>
+            <div className="flex items-center justify-center text-center">
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={time} onChange={handleTimeChange}/>
+            </div>
         </ResizablePanel>
     );
 };

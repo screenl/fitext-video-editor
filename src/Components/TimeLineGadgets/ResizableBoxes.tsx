@@ -1,88 +1,96 @@
-import React, { useState } from "react";
+import React from 'react';
 import { ResizableHandle, ResizablePanelGroup } from "../ui/resizable";
-import ResizableBox from "./ResizableBox"; // import the new component
-// import Exercise from './Exercise'; // import the Exercise component
+// import { ResizableBox } from "./ResizableBox";
+import ResizableBox from './ResizableBox';
 
-export interface BoxesProps {
-  exercises: Array<{ 
-    reps: number; 
-    sets: number; 
-    time: number;
-    size: number;
-  }>;
+interface BoxesProps {
+    exercises: Array<{
+        name: string;
+        reps: number;
+        sets: number;
+        time: number;
+        size: number;
+    }>;
+    setExercisesState: React.Dispatch<React.SetStateAction<{name: string, reps: number, sets: number, time: number, size: number}[]>>;
+    width: number;
+    setWidth: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWidth}) => {
+    const handleExerciseChange = (index: number, field: 'name' | 'reps' | 'sets' | 'time' | 'size', value: number|string) => {
+        const newExercisesState = [...exercises];
+        if (index < exercises.length) {
+            exercises[index][field] = value;
+        }
+        setExercisesState(newExercisesState);
+    };
 
+    const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+        const container = event.currentTarget;
+        const containerRect = container.getBoundingClientRect();
+        const cursorXRelativeToContainer = event.clientX - containerRect.left;
+        const cursorRatio = cursorXRelativeToContainer / containerRect.width;
 
-const Boxes: React.FC<any> = ([exercises,setExercises], [width, setWidth]) => {
-  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
-    const container = event.currentTarget;
-    const containerRect = container.getBoundingClientRect();
-    const cursorXRelativeToContainer = event.clientX - containerRect.left;
-    const cursorRatio = cursorXRelativeToContainer / containerRect.width;
+        const delta = event.deltaY;
+        const newWidth = width + delta;
 
-    const delta = event.deltaY;
-    const newWidth = width + delta;
+        // Calculate the new width and ensure minimum width
+        let adjustedWidth;
+        if (newWidth < 100) {
+            adjustedWidth = 100;
+        } else {
+            adjustedWidth = newWidth;
+        }
 
-    // Calculate the new width and ensure minimum width
-    let adjustedWidth;
-    if (newWidth < 100) {
-      adjustedWidth = 100;
-    } else {
-      adjustedWidth = newWidth;
+        // Calculate the new scrollLeft position to keep the cursor centered
+        const newScrollLeft =
+            container.scrollLeft + (adjustedWidth - width) * cursorRatio;
+
+        // Update width and scrollLeft
+        setWidth(adjustedWidth);
+        container.scrollLeft = newScrollLeft;
+    };
+
+    const sizeSetter = (index: number) => {
+        return ((s: number)=>{
+            // console.log(index,exercises,s);
+            if (index < exercises.length) {
+                exercises[index].size = s;
+            }
+        });
     }
 
-    // Calculate the new scrollLeft position to keep the cursor centered
-    const newScrollLeft =
-      container.scrollLeft + (adjustedWidth - width) * cursorRatio;
-
-    // Update width and scrollLeft
-    setWidth(adjustedWidth);
-    container.scrollLeft = newScrollLeft;
-    console.log(exercises);
-  };
-
-  function sizeSetter(index: number){
-    return ((s: number)=>{
-      console.log(index,exercises,s);
-      exercises[index].size = s;
-    });
-  };
-
-  return (
-    <div
-      className="h-full min-w-[800px]"
-      style={{ width: `${width}px` }}
-      onWheel={handleWheel}
-    >
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="flex-col rounded-lg border"
-      >
-
-
-
-        {/*  TODO: Refactor this one: */}
-        {/*  render resizable box for each exercise in array */}
-        {exercises.map((exercise: { reps: any; sets: any; time: any; size: number }, index: number) => (
-          <>
-            <ResizableBox
-              key = {index+1}
-              defaultSize={exercise.size}
-              className="grid grid-rows-4 justify-items-stretch divide-y"
-              reps={exercise.reps}
-              sets={exercise.sets}
-              time={exercise.time}
-              setSize={sizeSetter(index)}
-            >
-              {/*<Exercise />*/}
-            </ResizableBox>
-
-            <ResizableHandle />
-          </>
-        ))}
-      </ResizablePanelGroup>
-    </div>
+    return (
+        <div
+            className="h-full min-w-[800px]"
+            style={{ width: `${width}px` }}
+            onWheel={handleWheel}
+        >
+      {/*// <div className="h-full w-[1000px]">*/}
+      {/*// <div className="h-full w-100">*/}
+        <ResizablePanelGroup
+            direction="horizontal"
+            className="flex-col rounded-lg border"
+        >
+          {exercises.map((exercise, index) => (
+              <>
+                  { index > 0 && <ResizableHandle withHandle/>}
+                  <ResizableBox key={index} defaultSize={exercise.size}
+                    className="grid grid-rows-4 justify-items-stretch divide-y"
+                    reps={exercise.reps} sets={exercise.sets}
+                    time={exercise.time}
+                    onRepsChange={(value: number) => handleExerciseChange(index, 'reps', value)}
+                    onSetsChange={(value: number) => handleExerciseChange(index, 'sets', value)}
+                    onTimeChange={(value: number) => handleExerciseChange(index, 'time', value)}
+                    onExerciseChange={(value: string) => handleExerciseChange(index, 'name', value)}
+                    setSize={sizeSetter(index)}
+                  >
+                  </ResizableBox>
+                  {/*<ResizableHandle />*/}
+              </>
+          ))}
+        </ResizablePanelGroup>
+      </div>
   );
 };
 
