@@ -58,7 +58,8 @@ export default function HomePage() {
         <div className="aspect-video h-[450px] w-[975px]">
           {player(vs, setvs, videoUrl)}
         </div>
-        <MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />
+        {/*  TODO: fix size issues */}
+        {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
         {/*<div className="aspect-video h-[450px] w-[975px]">*/}
         {/*  {player(vs, setvs, videoUrl)}*/}
         {/*</div>*/}
@@ -68,6 +69,7 @@ export default function HomePage() {
               <TimeLine exercises={exercises} setExercisesState={setExercisesState} width={width} setWidth={setWidth}/>
           </div>
 
+          {/*  TODO: max-height */}
           <div className="flex flex-col overflow-hidden bg-white">
               <AddExcersiseButton addExercise={addExercise}/>
               <VideoUploadButton onVideoUpload={setVideoUrl}/>

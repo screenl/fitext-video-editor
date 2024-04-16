@@ -82,9 +82,9 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
                     </PopoverTrigger>
                     <PopoverContent className="w-80">
                         <Grid onClick={(gif) => {
-                            const exerciseName = gif.default.src.split('/').pop().split('.').shift();
+                            const exerciseName = gif.default.src.split('/').pop().split('.').shift().split('_').join(' ');
                             onExerciseChange(exerciseName);
-                            setExercise(<div><p>exerciseName</p><img src={gif.default.src} className={"max-h-20"} /></div>);
+                            setExercise(<div><p>{exerciseName}</p><img src={gif.default.src} className={"max-h-20"} /></div>);
                             // console.log(exercise);
                         }} />
                     </PopoverContent>
