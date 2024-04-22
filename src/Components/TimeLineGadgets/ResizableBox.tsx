@@ -23,7 +23,7 @@ interface ResizableBoxProps {
 }
 
 interface GridProps {
-    onClick: (gif: Gif) => void;
+    onClick: (gif: Gif, exerciseName: string, reps: number, sets: number) => void;
 }
 
 interface Gif {
@@ -54,20 +54,23 @@ const staticExercises: string[] = [
     "sit v leg stretch center",
     "sit v leg stretch LR",
     "spine lumbar twist stretch",
-    "split sink LR",
+    "Split sink LR",
     "split stretch",
     "wall sit",
 ];
 
-// TODO: Separate into a new component. Rename, refactor to be able to utilize exercise states properly.
 const Grid: React.FC<GridProps> = ({ onClick }) => {
     const [gifStates, setGifStates] = useState<Gif[]>(gifFiles);
 
-    // TODO: swap on relative position, stylize it better
     return (
-        <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
+        <div className="grid grid-cols-3 gap-4 max-w-[400px] max-h-[300px] overflow-auto">
             {gifStates.map((gif: Gif) => (
-                <Image src={gif.default.src} key={gif.default.src} onClick={() => onClick(gif)} alt={gif.default.src}/>
+                <Image src={gif.default.src} width={200} height={100} key={gif.default.src} onClick={() => {
+                    // @ts-ignore - requires a lots of checks for undefined values.
+                    const exerciseName = gif.default.src.split('/').pop().split('.').shift().split('_').join(' ');
+
+                    onClick(gif, exerciseName, 1, 1);
+                }} alt={gif.default.src}/>
             ))}
         </div>
     );
@@ -76,6 +79,7 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
 
 const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, reps, sets, time , onRepsChange, onSetsChange, onTimeChange, onExerciseChange, setSize}) => {
     const [exercise, setExercise] = useState<React.ReactNode | null>(null);
+    const [exerciseName, setExerciseName] = useState<string>(''); // Add this line
 
     const handleRepsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onRepsChange(Number(event.target.value));
@@ -107,16 +111,18 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
                             </button>
                         ) }
                     </PopoverTrigger>
-                    <PopoverContent className="w-80">
-                        <Grid onClick={(gif: Gif) => {
-                            // @ts-expect-error - requires a lots of checks for undefined values.
-                            const exerciseName = gif.default.src.split('/').pop().split('.').shift().split('_').join(' ');
+                    <PopoverContent className="w-[400px]">
+                        <Grid onClick={(gif: Gif, exerciseName: string, reps: number, sets: number) => {
                             onExerciseChange(exerciseName);
+
+                            setExerciseName(exerciseName);
+                            onRepsChange(reps);
+                            onSetsChange(sets);
 
                             setExercise(
                                 <div>
                                     <p>{exerciseName}</p>
-                                    <Image src={gif.default.src} className={"max-h-20"} alt={gif.default.src}/>
+                                    <Image src={gif.default.src} className={"max-h-20"} width={150} height={100} alt={gif.default.src}/>
                                 </div>
                             );
                             // console.log(exercise);
@@ -124,15 +130,14 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
                     </PopoverContent>
                 </Popover>
             </div>
-            {/* TODO: check if exercise name is in */}
             <div className="flex items-center justify-center text-center">
-                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={reps} onChange={handleRepsChange}/>
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={reps} onChange={handleRepsChange} disabled={staticExercises.includes(exerciseName)}/>
             </div>
             <div className="flex items-center justify-center text-center">
-                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={sets} onChange={handleSetsChange}/>
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={sets} onChange={handleSetsChange} disabled={staticExercises.includes(exerciseName)}/>
             </div>
             <div className="flex items-center justify-center text-center">
-                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={time} onChange={handleTimeChange}/>
+                <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={time} onChange={handleTimeChange} />
             </div>
         </ResizablePanel>
     );
