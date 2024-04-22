@@ -66,7 +66,7 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
         <div className="grid grid-cols-3 gap-4 max-w-[400px] max-h-[300px] overflow-auto">
             {gifStates.map((gif: Gif) => (
                 <Image src={gif.default.src} width={200} height={100} key={gif.default.src} onClick={() => {
-                    // @ts-ignore - requires a lots of checks for undefined values.
+                    // @ts-expect-error - requires a lots of checks for undefined values.
                     const exerciseName = gif.default.src.split('/').pop().split('.').shift().split('_').join(' ');
 
                     onClick(gif, exerciseName, 1, 1);
