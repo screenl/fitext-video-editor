@@ -20,6 +20,7 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
     const handleExerciseChange = (index: number, field: 'name' | 'reps' | 'sets' | 'time' | 'size', value: number|string) => {
         const newExercisesState = [...exercises];
         if (index < exercises.length) {
+            // @ts-expect-error - maybe solvable with a reflection.
             exercises[index][field] = value;
         }
         setExercisesState(newExercisesState);
@@ -35,12 +36,7 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
         const newWidth = width + delta;
 
         // Calculate the new width and ensure minimum width
-        let adjustedWidth;
-        if (newWidth < 100) {
-            adjustedWidth = 100;
-        } else {
-            adjustedWidth = newWidth;
-        }
+        const adjustedWidth = newWidth < 100 ? 100 : newWidth;
 
         // Calculate the new scrollLeft position to keep the cursor centered
         const newScrollLeft =
@@ -55,6 +51,7 @@ const Boxes: React.FC<BoxesProps> = ({exercises, setExercisesState, width, setWi
         return ((s: number)=>{
             // console.log(index,exercises,s);
             if (index < exercises.length) {
+                // @ts-expect-error - maybe solvable with a reflection.
                 exercises[index].size = s;
             }
         });

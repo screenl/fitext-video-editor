@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { ResizablePanel } from "../ui/resizable";
+import Image from 'next/image';
 
 import {
     Popover,
@@ -18,29 +19,55 @@ interface ResizableBoxProps {
     onSetsChange: (value: number) => void;
     onTimeChange: (value: number) => void;
     onExerciseChange: (value: string) => void;
-    setSize: any
-    // exercise?: null | React.ReactNode;
+    setSize: (size: number) => void;
 }
 
 interface GridProps {
-    onClick: (gif: string) => void;
+    onClick: (gif: Gif) => void;
 }
+
+interface Gif {
+    default: {
+        src: string;
+    };
+}
+
+
+const importAll = (r: __WebpackModuleApi.RequireContext) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call
+    return r.keys().map(r);
+}
+// @ts-expect-error - TS is having a hard time to realize this is a string[].
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call
+const gifFiles: Gif[] = importAll(require.context('public/assets/exercises', false, /\.(gif)$/));
+
+const staticExercises: string[] = [
+    "butterfly stretch",
+    "calf stretch",
+    "chest stretch",
+    "child pose",
+    "hamstring stretch",
+    "hip stretch",
+    "plank",
+    "quad stretch",
+    "sit and reach stretch",
+    "sit v leg stretch center",
+    "sit v leg stretch LR",
+    "spine lumbar twist stretch",
+    "split sink LR",
+    "split stretch",
+    "wall sit",
+];
 
 // TODO: Separate into a new component. Rename, refactor to be able to utilize exercise states properly.
 const Grid: React.FC<GridProps> = ({ onClick }) => {
-    const importAll = (r: unknown) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-        return r.keys().map(r);
-    }
-    const gifFiles = importAll(require.context('public/assets/exercises', false, /\.(gif)$/));
-
-    const [gifStates, setGifStates] = useState<string[]>(gifFiles);
+    const [gifStates, setGifStates] = useState<Gif[]>(gifFiles);
 
     // TODO: swap on relative position, stylize it better
     return (
         <div className="grid grid-cols-3 gap-4 max-h-[200px] overflow-auto">
-            {gifStates.map((gif) => (
-                <img src={gif.default.src} onClick={() => onClick(gif)}/>
+            {gifStates.map((gif: Gif) => (
+                <Image src={gif.default.src} key={gif.default.src} onClick={() => onClick(gif)} alt={gif.default.src}/>
             ))}
         </div>
     );
@@ -64,8 +91,8 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
 
     return (
         <ResizablePanel
-        defaultSize={defaultSize} className={className} onResize={(size,prev_size=defaultSize)=>{
-          // console.log(size,prev_size);
+        defaultSize={defaultSize} className={className} onResize={(size, prev_size=defaultSize)=>{
+          console.log(size,prev_size);
           setSize(size); 
           //setSize(size*prev_size/100);
         }}>
@@ -81,15 +108,23 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({ defaultSize, className, rep
                         ) }
                     </PopoverTrigger>
                     <PopoverContent className="w-80">
-                        <Grid onClick={(gif) => {
+                        <Grid onClick={(gif: Gif) => {
+                            // @ts-expect-error - requires a lots of checks for undefined values.
                             const exerciseName = gif.default.src.split('/').pop().split('.').shift().split('_').join(' ');
                             onExerciseChange(exerciseName);
-                            setExercise(<div><p>{exerciseName}</p><img src={gif.default.src} className={"max-h-20"} /></div>);
+
+                            setExercise(
+                                <div>
+                                    <p>{exerciseName}</p>
+                                    <Image src={gif.default.src} className={"max-h-20"} alt={gif.default.src}/>
+                                </div>
+                            );
                             // console.log(exercise);
                         }} />
                     </PopoverContent>
                 </Popover>
             </div>
+            {/* TODO: check if exercise name is in */}
             <div className="flex items-center justify-center text-center">
                 <input type="number" className="input h-5 w-10 text-gray-800 bg-gray-200 border-gray-300 remove-arrow" value={reps} onChange={handleRepsChange}/>
             </div>

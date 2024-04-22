@@ -20,7 +20,6 @@ const TimeLine: React.FC<TimeLineProps> = ({exercises, setExercisesState, width,
                   <Rows/>
                   <div className="flex-1 overflow-x-scroll">
                       <Boxes exercises={exercises} setExercisesState={setExercisesState} width={width} setWidth={setWidth}/>
-                      {/*{Boxes(exercises={exercises} setExercisesState={setExercisesState},[width,setWidth])}*/}
                   </div>
                   {/*<div className="flex-1 overflow-x-auto hover:overflow-x-auto focus:overflow-x-auto">*/}
                   {/*    <Boxes exercises={exercises} setExercisesState={setExercisesState}/>*/}
