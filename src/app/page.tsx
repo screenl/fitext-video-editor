@@ -120,7 +120,7 @@ export default function HomePage() {
             />
           </div>
 
-          {/*  TODO: max-height */}
+          {/* The div for the buttons on the right */}
           <div className="flex flex-col overflow-hidden bg-white">
             <AddExerciseButton addExercise={addExercise} />
             <VideoUploadButton onVideoUpload={setVideoUrl} />
