@@ -96,14 +96,19 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center px-4">
-        <div className="aspect-video h-[450px] w-[975px]">
-          {player(vs, setvs, videoUrl)}
+        {/* Top part with Landscape and Portrait view */}
+        <div className="flex flex-row">
+          <div className="aspect-video h-[450px] w-[900px]">
+            {player(vs, setvs, videoUrl)}
+          </div>
+          {/*  TODO: fix size issues */}
+          {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
+          {/*<div className="aspect-video h-[450px] w-[975px]">*/}
+          {/*  {player(vs, setvs, videoUrl)}*/}
+          {/*</div>*/}
+
+          <PortraitView />
         </div>
-        {/*  TODO: fix size issues */}
-        {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
-        {/*<div className="aspect-video h-[450px] w-[975px]">*/}
-        {/*  {player(vs, setvs, videoUrl)}*/}
-        {/*</div>*/}
 
         <div className="flex flex-row ">
           <div className="w-[850px]">
@@ -115,7 +120,6 @@ export default function HomePage() {
             />
           </div>
 
-          <PortraitView />
           {/*  TODO: max-height */}
           <div className="flex flex-col overflow-hidden bg-white">
             <AddExerciseButton addExercise={addExercise} />

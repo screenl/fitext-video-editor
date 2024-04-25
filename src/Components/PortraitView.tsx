@@ -2,7 +2,7 @@ import React from "react";
 
 const PortraitView: React.FC = () => {
   return (
-    <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
+    <div className="ml-2 h-[450px] w-[250px] overflow-y-scroll rounded-lg bg-white p-4">
       {/* 竖屏上半部分留出空白放视频 */}
       <div className="mb-4 h-[200px] rounded-lg bg-gray-200"></div>
       {/* 大的bubble */}
