@@ -72,7 +72,7 @@ const Boxes: React.FC<BoxesProps> = ({
 
   return (
     <div
-      className="h-full min-w-[800px]"
+      className={`h-full min-w-${width}`}
       style={{ width: `${width}px` }}
       onWheel={handleWheel}
     >
