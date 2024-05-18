@@ -7,6 +7,7 @@ import TimeLine from "~/Components/TimeLine";
 import VideoUploadButton from "~/Components/VideoUploadButton";
 import AddExerciseButton from "~/Components/AddExerciseButton";
 import PortraitView from "~/Components/PortraitView";
+import { number } from "zod";
 
 interface MobilePreviewProps {
   videoUrl: string | null;
@@ -51,14 +52,16 @@ const MobilePreview: React.FC<MobilePreviewProps> = ({
 };
 
 export default function HomePage() {
+  // The state that keep track of the playing progress of the video
   const [vs, setvs] = useState({
-    time: 1,
-    progress: 0,
+    time: 1, // The total length of the video
+    progress: 0, // The time elapsed (in seconds)
     workout_desc: "",
     playing: false,
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
+  // The state that manage the information of the exercises in the box
   const [exercises, setExercisesState] = useState<
     Array<{
       name: string;
@@ -68,6 +71,22 @@ export default function HomePage() {
       size: number;
     }>
   >([]);
+
+  // The state that monitors the current box
+  const [currentPlaying, setCurrentPlaying] = useState<number>(0);
+  const handleCurrentPlaying = () => {
+    let currentTime: number = vs.progress / vs.time;
+    let index = 0;
+    for (index; index < exercises.length; index++) {
+      const element = exercises[index];
+      currentTime -= element.size / 100; // Here I am using size to monitor the progress
+      if (currentTime <= 0) {
+        break;
+      }
+    }
+    setCurrentPlaying(index);
+    console.log(currentTime);
+  };
 
   const addExercise = () => {
     if (exercises.length == 0) {
