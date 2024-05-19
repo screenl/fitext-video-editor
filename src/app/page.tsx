@@ -58,6 +58,8 @@ export default function HomePage() {
   state [currentPlaying, setCurrentPlaying]: keep track of the current playing exercise.
   state [width, setWidth]: the width of TimeLine component (where the boxes of exercises are).
 
+  effect currentPlayingEffect: updates when the video is being played, or the playing status is changed.
+
   More details in the comments below.
    */
 
@@ -81,11 +83,11 @@ export default function HomePage() {
     }>
   >([]);
 
-  // The state that monitors the current box
   const currentPlayingEffect = useEffect(() => {
     handleCurrentPlaying();
   }, [vs.progress, vs.playing]);
 
+  // The state that monitors the current box
   const [currentPlaying, setCurrentPlaying] = useState<number>(0);
   const handleCurrentPlaying = () => {
     let currentTime: number = vs.progress / vs.time;
