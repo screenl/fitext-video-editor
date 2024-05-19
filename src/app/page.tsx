@@ -1,7 +1,7 @@
 "use client"; // This is a client component 👈🏽
 
 import player from "../Components/video_player";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import TimeLine from "~/Components/TimeLine";
 import VideoUploadButton from "~/Components/VideoUploadButton";
@@ -52,6 +52,15 @@ const MobilePreview: React.FC<MobilePreviewProps> = ({
 };
 
 export default function HomePage() {
+  /*
+  List of important hooks:
+  state [vs, setvs]: keep track of the playing properties of the video, like duration and play or stop status etc.
+  state [currentPlaying, setCurrentPlaying]: keep track of the current playing exercise.
+  state [width, setWidth]: the width of TimeLine component (where the boxes of exercises are).
+
+  More details in the comments below.
+   */
+
   // The state that keep track of the playing progress of the video
   const [vs, setvs] = useState({
     time: 1, // The total length of the video
@@ -73,6 +82,10 @@ export default function HomePage() {
   >([]);
 
   // The state that monitors the current box
+  const currentPlayingEffect = useEffect(() => {
+    handleCurrentPlaying();
+  }, [vs.progress, vs.playing]);
+
   const [currentPlaying, setCurrentPlaying] = useState<number>(0);
   const handleCurrentPlaying = () => {
     let currentTime: number = vs.progress / vs.time;
@@ -85,7 +98,7 @@ export default function HomePage() {
       }
     }
     setCurrentPlaying(index);
-    console.log(currentTime);
+    console.log(currentPlaying);
   };
 
   const addExercise = () => {
