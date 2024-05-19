@@ -141,7 +141,7 @@ export default function HomePage() {
           {/*  {player(vs, setvs, videoUrl)}*/}
           {/*</div>*/}
 
-          <PortraitView />
+          <PortraitView exercises={exercises} currentPlaying={currentPlaying} />
         </div>
 
         <div className="flex flex-row ">
