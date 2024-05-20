@@ -81,7 +81,15 @@ export default function HomePage() {
       time: number;
       size: number;
     }>
-  >([]);
+  >([
+    {
+      name: "jogging",
+      reps: 0,
+      sets: 0,
+      time: 0,
+      size: 100,
+    },
+  ]);
 
   const currentPlayingEffect = useEffect(() => {
     handleCurrentPlaying();
@@ -141,7 +149,7 @@ export default function HomePage() {
           {/*  {player(vs, setvs, videoUrl)}*/}
           {/*</div>*/}
 
-          <PortraitView />
+          <PortraitView exercises={exercises} currentPlaying={currentPlaying} />
         </div>
 
         <div className="flex flex-row ">

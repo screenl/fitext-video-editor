@@ -1,8 +1,54 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { record } from "zod";
+interface Exercise {
+  name: string;
+  reps: number;
+  sets: number;
+  time: number;
+  size: number;
+}
 
-const PortraitView: React.FC = () => {
+interface exerciseProp {
+  exercises: Exercise[];
+  currentPlaying: number;
+}
+
+interface recordProps {
+  name: string;
+  time: number;
+}
+
+const PortraitView: React.FC<exerciseProp> = ({
+  exercises,
+  currentPlaying,
+}) => {
+  const [records, setRecords] = useState<recordProps[]>([]);
+
+  const recordList = useRef<HTMLUListElement>(null);
+  const addRecord = useEffect(() => {
+    setRecords(() => {
+      if (exercises.length != 0) {
+        return [
+          ...records,
+          {
+            name: exercises[currentPlaying].name,
+            time: exercises[currentPlaying].time,
+          },
+        ];
+      } else {
+        return records;
+      }
+    });
+  }, [currentPlaying]); //To be solved: if we changed the exercise of the current playing box, the records could not update.
+
+  const scrollToBottom = useEffect(() => {
+    // This effect scrolls to the bottom (revealing the new popped up exercise)
+    // whenever {records} is updated.
+    recordList.current.scrollTop = recordList.current.scrollHeight;
+  }, [records]);
+
   return (
-    <div className="ml-2 h-[450px] w-[250px] overflow-y-scroll rounded-lg bg-white p-4">
+    <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
       {/* 竖屏上半部分留出空白放视频 */}
       <div className="mb-4 h-[200px] rounded-lg bg-gray-200"></div>
       {/* 大的bubble */}
@@ -10,26 +56,34 @@ const PortraitView: React.FC = () => {
         {/* 两个平行的小bubble */}
         <div className="mb-2 flex justify-between">
           <span className="rounded-full bg-white px-2 py-1 text-sm text-blue-500">
-            Set 2/2
+            Set {exercises[currentPlaying].sets}
           </span>
           <span className="rounded-full bg-white px-2 py-1 text-sm text-blue-500">
-            28 Sec
+            {exercises[currentPlaying].time} Sec
           </span>
         </div>
         {/* 两个进度条 */}
         <div className="mb-1 h-1 rounded-full bg-white"></div>
         <div className="h-1 rounded-full bg-white"></div>
       </div>
-      {/* 三个从上到下的小bubble */}
-      <div className="mb-2 rounded-lg bg-gray-200 px-2 py-1 text-gray-800">
-        Rest
+
+      {/* 从上到下的小记录之前的exercise的bubble */}
+      <div
+        ref={recordList}
+        className="h-[125px] overflow-y-scroll align-bottom"
+      >
+        {records.length !== 0 &&
+          records.map((record, index) => (
+            <div
+              key={index}
+              className="mb-4 rounded-lg bg-gray-200 px-2 py-1 text-gray-500"
+            >
+              <div className="text-sm">{record.time} seconds</div>
+              <div>{record.name}</div>
+            </div>
+          ))}
       </div>
-      <div className="mb-2 rounded-lg bg-gray-200 px-2 py-1 text-gray-800">
-        Flex Sits
-      </div>
-      <div className="mb-4 rounded-lg bg-gray-200 px-2 py-1 text-gray-800">
-        Leg Curls
-      </div>
+
       {/* 竖屏最下面的长条 */}
       <div className="flex items-center justify-between rounded-lg bg-gray-100 p-2">
         <i className="fas fa-map-marker-alt text-gray-500"></i>
