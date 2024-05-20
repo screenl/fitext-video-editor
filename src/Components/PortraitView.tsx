@@ -39,9 +39,13 @@ const PortraitView: React.FC<exerciseProp> = ({
         return records;
       }
     });
+  }, [currentPlaying]); //To be solved: if we changed the exercise of the current playing box, the records could not update.
 
+  const scrollToBottom = useEffect(() => {
+    // This effect scrolls to the bottom (revealing the new popped up exercise)
+    // whenever {records} is updated.
     recordList.current.scrollTop = recordList.current.scrollHeight;
-  }, [currentPlaying]);
+  }, [records]);
 
   return (
     <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
@@ -52,12 +56,10 @@ const PortraitView: React.FC<exerciseProp> = ({
         {/* 两个平行的小bubble */}
         <div className="mb-2 flex justify-between">
           <span className="rounded-full bg-white px-2 py-1 text-sm text-blue-500">
-            Set{" "}
-            {exercises.length == 0 ? "None" : exercises[currentPlaying].sets}
+            Set {exercises[currentPlaying].sets}
           </span>
           <span className="rounded-full bg-white px-2 py-1 text-sm text-blue-500">
-            {exercises.length == 0 ? "None" : exercises[currentPlaying].time}{" "}
-            Sec
+            {exercises[currentPlaying].time} Sec
           </span>
         </div>
         {/* 两个进度条 */}
