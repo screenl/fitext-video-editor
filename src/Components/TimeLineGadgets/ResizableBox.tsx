@@ -125,7 +125,7 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({
       defaultSize={defaultSize}
       className={className}
       onResize={(size, prev_size = defaultSize) => {
-        console.log("size:", size, "Prev", prev_size);
+        // console.log("size:", size, "Prev", prev_size);
         if ((size / 100) * width <= 100) {
           setWidth(10000 / size);
         }
