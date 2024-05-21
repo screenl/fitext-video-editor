@@ -108,7 +108,6 @@ export default function HomePage() {
       }
     }
     setCurrentPlaying(index);
-    console.log(currentPlaying);
   };
 
   const addExercise = () => {
@@ -159,6 +158,7 @@ export default function HomePage() {
               setExercisesState={setExercisesState}
               width={width}
               setWidth={setWidth}
+              current={currentPlaying}
             />
           </div>
 

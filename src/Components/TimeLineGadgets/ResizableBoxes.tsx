@@ -18,6 +18,7 @@ interface BoxesProps {
   >;
   width: number;
   setWidth: React.Dispatch<React.SetStateAction<number>>;
+  current: number;
 }
 
 const Boxes: React.FC<BoxesProps> = ({
@@ -25,6 +26,7 @@ const Boxes: React.FC<BoxesProps> = ({
   setExercisesState,
   width,
   setWidth,
+  current
 }) => {
   const handleExerciseChange = (
     index: number,
@@ -84,7 +86,7 @@ const Boxes: React.FC<BoxesProps> = ({
       >
         {exercises.map((exercise, index) => (
           <>
-            {index > 0 && <ResizableHandle withHandle />}
+            {index > 0 && <ResizableHandle withHandle pinid={index} color={current==index||current==index+1?"lime":"gold"}/>}
             <ResizableBox
               key={index}
               defaultSize={exercise.size}

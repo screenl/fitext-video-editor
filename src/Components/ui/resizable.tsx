@@ -40,7 +40,7 @@ const ResizableHandle = ({
   >
     {(pinid && color) ? (<div 
     style={{backgroundColor: color}}
-    className={"pin relative top-[-82px] text-white after:absolute after:content-[''] after:h-[30px] after:w-[30px] after:top-[-2px] after:bg-inherit after:right-[-12px] after:z-[-1] after:rounded-full before:absolute before:top-[28px] before:right-[2px] before:w-[2px] before:h-[250px] before:bg-inherit before:content-['']"}>
+    className={"pin relative top-[-82px] left-[5px] text-white after:absolute after:content-[''] after:h-[30px] after:w-[30px] after:top-[-2px] after:bg-inherit after:right-[-12px] after:z-[-1] after:rounded-full before:absolute before:top-[28px] before:right-[2px] before:w-[2px] before:h-[250px] before:bg-inherit before:content-['']"}>
       <span className=" bg-transparent">{pinid}</span>
     </div>) : (<></>)
     }
