@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import player from "./video_player";
+import { type videoState, type setVideoState } from "./video_state";
 import { record } from "zod";
 interface Exercise {
   name: string;
@@ -11,6 +13,9 @@ interface Exercise {
 interface exerciseProp {
   exercises: Exercise[];
   currentPlaying: number;
+  vs: videoState; //video state
+  setvs: setVideoState; //set video state
+  videoUrl: string | null; // also a state
 }
 
 interface recordProps {
@@ -21,6 +26,9 @@ interface recordProps {
 const PortraitView: React.FC<exerciseProp> = ({
   exercises,
   currentPlaying,
+  vs,
+  setvs,
+  videoUrl,
 }) => {
   const [records, setRecords] = useState<recordProps[]>([]);
 
@@ -49,8 +57,10 @@ const PortraitView: React.FC<exerciseProp> = ({
 
   return (
     <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
-      {/* 竖屏上半部分留出空白放视频 */}
-      <div className="mb-4 h-[200px] rounded-lg bg-gray-200"></div>
+      <div className="mb-4 h-[200px] rounded-lg bg-gray-200">
+        {/* 竖屏上半部分留出空白放视频 false is for toggling the visibility of the side bar*/}
+        {player(vs, setvs, videoUrl, false)}
+      </div>
       {/* 大的bubble */}
       <div className="mb-4 rounded-lg bg-blue-500 p-2 text-white">
         {/* 两个平行的小bubble */}
