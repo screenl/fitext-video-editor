@@ -140,7 +140,7 @@ export default function HomePage() {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl)}
+            {player(vs, setvs, videoUrl, true)}
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
@@ -148,7 +148,13 @@ export default function HomePage() {
           {/*  {player(vs, setvs, videoUrl)}*/}
           {/*</div>*/}
 
-          <PortraitView exercises={exercises} currentPlaying={currentPlaying} />
+          <PortraitView
+            exercises={exercises}
+            currentPlaying={currentPlaying}
+            vs={vs}
+            setvs={setvs}
+            videoUrl={videoUrl}
+          />
         </div>
 
         <div className="flex flex-row ">
