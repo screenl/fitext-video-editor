@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { ResizableHandle, ResizablePanelGroup } from "../ui/resizable";
-// import { ResizableBox } from "./ResizableBox";
 import ResizableBox from "./ResizableBox";
 
 interface BoxesProps {
@@ -13,7 +12,13 @@ interface BoxesProps {
   }>;
   setExercisesState: React.Dispatch<
     React.SetStateAction<
-      { name: string; reps: number; sets: number; time: number; size: number }[]
+      {
+        name: string;
+        reps: number;
+        sets: number;
+        time: number;
+        size: number;
+      }[]
     >
   >;
   width: number;
@@ -39,6 +44,7 @@ const Boxes: React.FC<BoxesProps> = ({
     setExercisesState(newExercisesState);
   };
 
+  // TODO: separate zoom and scrolling
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
     const container = event.currentTarget;
     const containerRect = container.getBoundingClientRect();
@@ -72,21 +78,21 @@ const Boxes: React.FC<BoxesProps> = ({
 
   return (
     <div
-      className={`h-full min-w-${width}`}
+      className={`h-full min-w-[${width}px]`}
       style={{ width: `${width}px` }}
       onWheel={handleWheel}
     >
-      {/*// <div className="h-full w-[1000px]">*/}
-      {/*// <div className="h-full w-100">*/}
       <ResizablePanelGroup
         direction="horizontal"
         className="flex-col rounded-lg border"
       >
         {exercises.map((exercise, index) => (
-          <>
-            {index > 0 && <ResizableHandle withHandle />}
+          <Fragment key={index}>
+            {index > 0 && (
+              <ResizableHandle key={`handle-${index}`} withHandle />
+            )}
             <ResizableBox
-              key={index}
+              key={`box-${index}`}
               defaultSize={exercise.size}
               className="grid grid-rows-4 justify-items-stretch divide-y"
               reps={exercise.reps}
@@ -109,7 +115,7 @@ const Boxes: React.FC<BoxesProps> = ({
               setWidth={setWidth}
             ></ResizableBox>
             {/*<ResizableHandle />*/}
-          </>
+          </Fragment>
         ))}
       </ResizablePanelGroup>
     </div>

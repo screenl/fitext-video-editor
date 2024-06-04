@@ -120,6 +120,7 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({
     onTimeChange(Number(event.target.value));
   };
 
+  // TODO: mouse zoom doesn't care about min values.
   return (
     <ResizablePanel
       defaultSize={defaultSize}

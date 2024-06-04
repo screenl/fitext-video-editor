@@ -8,48 +8,6 @@ import VideoUploadButton from "~/Components/VideoUploadButton";
 import AddExerciseButton from "~/Components/AddExerciseButton";
 import PortraitView from "~/Components/PortraitView";
 
-interface MobilePreviewProps {
-  videoUrl: string | null;
-  setvs: (
-    value:
-      | ((prevState: {
-          workout_desc: string;
-          progress: number;
-          playing: boolean;
-          time: number;
-        }) => {
-          workout_desc: string;
-          progress: number;
-          playing: boolean;
-          time: number;
-        })
-      | {
-          workout_desc: string;
-          progress: number;
-          playing: boolean;
-          time: number;
-        },
-  ) => void;
-  vs: {
-    workout_desc: string;
-    progress: number;
-    playing: boolean;
-    time: number;
-  };
-}
-
-const MobilePreview: React.FC<MobilePreviewProps> = ({
-  videoUrl,
-  setvs,
-  vs,
-}) => {
-  return (
-    <div className="aspect-video h-[450px] w-[300px]">
-      {player(vs, setvs, videoUrl)}
-    </div>
-  );
-};
-
 export default function HomePage() {
   const [vs, setvs] = useState({
     time: 1,
@@ -78,7 +36,7 @@ export default function HomePage() {
       return;
     }
 
-    exercises[exercises.length - 1]!.size /= 2;
+    // exercises[exercises.length - 1]!.size /= 2;
     setExercisesState([
       ...exercises,
       {
@@ -93,21 +51,32 @@ export default function HomePage() {
 
   const [width, setWidth] = useState(200);
 
+  const [timelineScrollPosition, setTimelineScrollPosition] = useState(0);
+  const [timelineVisibleWidth, setTimelineVisibleWidth] = useState(0);
+  const [timelineTotalWidth, setTimelineTotalWidth] = useState(0);
+
+  // UseEffects to calculate the timelineScrollPosition, timelineVisibleWidth, and timelineTotalWidth
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       <div className="container flex flex-col items-center justify-center px-4">
-        {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
-          <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl)}
+          <div className="aspect-video h-[450px] w-[975px]">
+            {player(
+              vs,
+              setvs,
+              timelineScrollPosition,
+              timelineVisibleWidth,
+              timelineTotalWidth,
+              videoUrl,
+            )}
           </div>
-          {/*  TODO: fix size issues */}
-          {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
-          {/*<div className="aspect-video h-[450px] w-[975px]">*/}
-          {/*  {player(vs, setvs, videoUrl)}*/}
-          {/*</div>*/}
-
-          <PortraitView />
+          <PortraitView
+            currentExercise={exercises[0] ?? null}
+            vs={vs}
+            setvs={setvs}
+            videoUrl={videoUrl}
+          />
         </div>
 
         <div className="flex flex-row ">
@@ -120,7 +89,7 @@ export default function HomePage() {
             />
           </div>
 
-          {/* The div for the buttons on the right */}
+          {/*  TODO: max-height */}
           <div className="flex flex-col overflow-hidden bg-white">
             <AddExerciseButton addExercise={addExercise} />
             <VideoUploadButton onVideoUpload={setVideoUrl} />
