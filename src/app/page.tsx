@@ -119,7 +119,7 @@ export default function HomePage() {
       return;
     }
 
-    exercises[exercises.length - 1]!.size /= 2;
+    // exercises[exercises.length - 1]!.size /= 2;
     setExercisesState([
       ...exercises,
       {

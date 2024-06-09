@@ -26,7 +26,7 @@ const Boxes: React.FC<BoxesProps> = ({
   setExercisesState,
   width,
   setWidth,
-  current
+  current,
 }) => {
   const handleExerciseChange = (
     index: number,
@@ -36,7 +36,7 @@ const Boxes: React.FC<BoxesProps> = ({
     const newExercisesState = [...exercises];
     if (index < exercises.length) {
       // @ts-expect-error - maybe solvable with a reflection.
-      exercises[index][field] = value;
+      newExercisesState[index][field] = value;
     }
     setExercisesState(newExercisesState);
   };
@@ -67,7 +67,7 @@ const Boxes: React.FC<BoxesProps> = ({
       // console.log(index,exercises,s);
       if (index < exercises.length) {
         // @ts-expect-error - maybe solvable with a reflection.
-        exercises[index].size = s;
+        handleExerciseChange(index, "size", s);
       }
     };
   };
@@ -86,7 +86,15 @@ const Boxes: React.FC<BoxesProps> = ({
       >
         {exercises.map((exercise, index) => (
           <>
-            {index > 0 && <ResizableHandle withHandle pinid={index} color={current==index||current==index+1?"lime":"gold"}/>}
+            {index > 0 && (
+              <ResizableHandle
+                withHandle
+                pinid={index}
+                color={
+                  current == index || current == index + 1 ? "lime" : "gold"
+                }
+              />
+            )}
             <ResizableBox
               key={index}
               defaultSize={exercise.size}
