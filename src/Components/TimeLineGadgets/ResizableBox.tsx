@@ -66,26 +66,37 @@ const Grid: React.FC<GridProps> = ({ onClick }) => {
 
   return (
     <div className="grid max-h-[300px] max-w-[400px] grid-cols-3 gap-4 overflow-auto">
-      {gifStates.map((gif: Gif) => (
-        <Image
-          src={gif.default.src}
-          width={200}
-          height={100}
-          key={gif.default.src}
-          onClick={() => {
-            // @ts-expect-error - requires a lots of checks for undefined values.
-            const exerciseName = gif.default.src
+      {gifStates.map((gif: Gif, index: number) => (
+        <div key={gif.default.src}>
+          <p>
+            {gif.default.src
               .split("/")
               .pop()
               .split(".")
               .shift()
               .split("_")
-              .join(" ");
+              .join(" ")}
+          </p>
+          <Image
+            src={gif.default.src}
+            width={200}
+            height={100}
+            key={gif.default.src}
+            onClick={() => {
+              // @ts-expect-error - requires a lots of checks for undefined values.
+              const exerciseName = gif.default.src
+                .split("/")
+                .pop()
+                .split(".")
+                .shift()
+                .split("_")
+                .join(" ");
 
-            onClick(gif, exerciseName, 1, 1);
-          }}
-          alt={gif.default.src}
-        />
+              onClick(gif, exerciseName, 1, 1);
+            }}
+            alt={gif.default.src}
+          />
+        </div>
       ))}
     </div>
   );
@@ -129,7 +140,7 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({
         if ((size / 100) * width <= 100) {
           setWidth(10000 / size);
         }
-        // setSize(size);
+        setSize(size);
         //setSize(size*prev_size/100);
       }}
     >
