@@ -19,6 +19,7 @@ interface BoxesProps {
   width: number;
   setWidth: React.Dispatch<React.SetStateAction<number>>;
   current: number;
+  vs: any;
 }
 
 const Boxes: React.FC<BoxesProps> = ({
@@ -27,6 +28,7 @@ const Boxes: React.FC<BoxesProps> = ({
   width,
   setWidth,
   current,
+  vs,
 }) => {
   const handleExerciseChange = (
     index: number,
@@ -68,6 +70,8 @@ const Boxes: React.FC<BoxesProps> = ({
       if (index < exercises.length) {
         // @ts-expect-error - maybe solvable with a reflection.
         handleExerciseChange(index, "size", s);
+
+        handleExerciseChange(index, "time", Math.round((s * vs.time) / 100));
       }
     };
   };

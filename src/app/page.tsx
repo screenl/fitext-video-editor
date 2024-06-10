@@ -65,7 +65,7 @@ export default function HomePage() {
 
   // The state that keep track of the playing progress of the video
   const [vs, setvs] = useState({
-    time: 1, // The total length of the video
+    time: 1, // The total length of the video (in seconds)
     progress: 0, // The time elapsed (in seconds)
     workout_desc: "",
     playing: false,
@@ -119,7 +119,6 @@ export default function HomePage() {
       return;
     }
 
-    // exercises[exercises.length - 1]!.size /= 2;
     setExercisesState([
       ...exercises,
       {
@@ -165,6 +164,7 @@ export default function HomePage() {
               width={width}
               setWidth={setWidth}
               current={currentPlaying}
+              vs={vs}
             />
           </div>
 

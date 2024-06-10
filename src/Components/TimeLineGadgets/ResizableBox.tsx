@@ -206,12 +206,9 @@ const ResizableBox: React.FC<ResizableBoxProps> = ({
         />
       </div>
       <div className="flex items-center justify-center text-center">
-        <input
-          type="number"
-          className="remove-arrow input h-5 w-10 border-gray-300 bg-gray-200 text-gray-800"
-          value={time}
-          onChange={handleTimeChange}
-        />
+        <div className="remove-arrow input h-5 w-10 border-gray-300 bg-gray-200 text-gray-800">
+          {time}
+        </div>
       </div>
     </ResizablePanel>
   );
