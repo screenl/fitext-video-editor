@@ -95,7 +95,7 @@ const Boxes: React.FC<BoxesProps> = ({
                 withHandle
                 pinid={index}
                 color={
-                  current == index || current == index + 1 ? "lime" : "gold"
+                  current == index || current == index - 1 ? "lime" : "gold"
                 }
               />
             )}
