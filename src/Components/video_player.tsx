@@ -1,3 +1,4 @@
+import ReactPlayer, { ReactPlayerProps } from "react-player";
 import { videoPreview } from "./video_preview";
 import { videoState, setVideoState } from "./video_state";
 
@@ -8,8 +9,9 @@ function secs_to_mmss(t: number) {
 export default function player(
   state: videoState,
   setstate: setVideoState,
-  url?: string | null,
+  url: string | null,
   turnOnBar: boolean,
+  playerRef: React.RefObject<ReactPlayer>
 ) {
   function progressBar() {
     return (
@@ -73,7 +75,7 @@ export default function player(
     <div className="flex h-full flex-row bg-white text-black dark:bg-gray-900 dark:text-white">
       {turnOnBar && sideBar()}
       <div className="relative flex h-full w-full flex-1 flex-col">
-        {videoPreview(state, setstate, url)}
+        {videoPreview(state, setstate, url,playerRef)}
         {videoSpecs()}
         {progressBar()}
       </div>

@@ -9,6 +9,7 @@ import AddExerciseButton from "~/Components/AddExerciseButton";
 import PortraitView from "~/Components/PortraitView";
 import { number } from "zod";
 import LoopButton from "~/Components/LoopButton";
+import ReactPlayer, { ReactPlayerProps } from "react-player";
 
 interface MobilePreviewProps {
   videoUrl: string | null;
@@ -38,21 +39,23 @@ interface MobilePreviewProps {
     playing: boolean;
     time: number;
   };
+  playerRef: React.RefObject<ReactPlayer>
 }
 
 const MobilePreview: React.FC<MobilePreviewProps> = ({
   videoUrl,
   setvs,
   vs,
+  playerRef
 }) => {
   return (
     <div className="aspect-video h-[450px] w-[300px]">
-      {player(vs, setvs, videoUrl)}
+      {player(vs, setvs, videoUrl,false,playerRef)}
     </div>
   );
 };
 
-export default function HomePage() {
+export default function HomePage(this: any) {
   /*
   List of important hooks:
   state [vs, setvs]: keep track of the playing properties of the video, like duration and play or stop status etc.
@@ -72,6 +75,7 @@ export default function HomePage() {
     playing: false,
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const playerRef = React.useRef<ReactPlayer>(null);
 
   // The state that manage the information of the exercises in the box
   const [exercises, setExercisesState] = useState<
@@ -92,6 +96,7 @@ export default function HomePage() {
     },
   ]);
 
+
   const currentPlayingEffect = useEffect(() => {
     handleCurrentPlaying();
   }, [vs.progress, vs.playing]);
@@ -103,6 +108,7 @@ export default function HomePage() {
   const handleCurrentPlaying = () => {
     let currentTime: number = vs.progress / vs.time;
     let index = 0;
+
     for (index; index < exercises.length; index++) {
       const element = exercises[index];
       currentTime -= element.size / 100; // Here I am using size to monitor the progress
@@ -110,7 +116,12 @@ export default function HomePage() {
         break;
       }
     }
+    if(currentPlaying==2){
+      playerRef.current?.seekTo(0);
+    }
     setCurrentPlaying(index);
+
+    
   };
 
   const addExercise = () => {
@@ -142,7 +153,7 @@ export default function HomePage() {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl, true)}
+            {player(vs, setvs, videoUrl, true,playerRef)}
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
