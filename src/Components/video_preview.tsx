@@ -21,6 +21,7 @@ export function videoPreview(
           height="100%"
           url={url ?? ""}
           playing={state.playing}
+          progressInterval={10}
           onProgress={(statep: OnProgressProps) => {
             setstate({ ...state, progress: statep.playedSeconds });
           }}

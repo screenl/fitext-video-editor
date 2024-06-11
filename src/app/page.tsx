@@ -8,6 +8,7 @@ import VideoUploadButton from "~/Components/VideoUploadButton";
 import AddExerciseButton from "~/Components/AddExerciseButton";
 import PortraitView from "~/Components/PortraitView";
 import { number } from "zod";
+import LoopButton from "~/Components/LoopButton";
 
 interface MobilePreviewProps {
   videoUrl: string | null;
@@ -95,6 +96,8 @@ export default function HomePage() {
     handleCurrentPlaying();
   }, [vs.progress, vs.playing]);
 
+  const [isLooping, setLoop] = useState(false);
+
   // The state that monitors the current box
   const [currentPlaying, setCurrentPlaying] = useState<number>(0);
   const handleCurrentPlaying = () => {
@@ -172,6 +175,7 @@ export default function HomePage() {
           <div className="flex flex-col overflow-hidden bg-white">
             <AddExerciseButton addExercise={addExercise} />
             <VideoUploadButton onVideoUpload={setVideoUrl} />
+            {LoopButton(isLooping,setLoop)}
           </div>
         </div>
       </div>
