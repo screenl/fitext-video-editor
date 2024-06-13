@@ -7,9 +7,7 @@ import TimeLine from "~/Components/TimeLine";
 import VideoUploadButton from "~/Components/VideoUploadButton";
 import AddExerciseButton from "~/Components/AddExerciseButton";
 import PortraitView from "~/Components/PortraitView";
-import { number } from "zod";
 import LoopButton from "~/Components/LoopButton";
-import ReactPlayer, { ReactPlayerProps } from "react-player";
 
 interface MobilePreviewProps {
   videoUrl: string | null;
@@ -39,21 +37,9 @@ interface MobilePreviewProps {
     playing: boolean;
     time: number;
   };
-  playerRef: React.RefObject<ReactPlayer>
+  islooping: boolean;
+  currentPlaying: number;
 }
-
-const MobilePreview: React.FC<MobilePreviewProps> = ({
-  videoUrl,
-  setvs,
-  vs,
-  playerRef
-}) => {
-  return (
-    <div className="aspect-video h-[450px] w-[300px]">
-      {player(vs, setvs, videoUrl,false,playerRef)}
-    </div>
-  );
-};
 
 export default function HomePage(this: any) {
   /*
@@ -75,7 +61,7 @@ export default function HomePage(this: any) {
     playing: false,
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const playerRef = React.useRef<ReactPlayer>(null);
+  // const playerRef = React.useRef<ReactPlayer>(null);
 
   // The state that manage the information of the exercises in the box
   const [exercises, setExercisesState] = useState<
@@ -96,7 +82,6 @@ export default function HomePage(this: any) {
     },
   ]);
 
-
   const currentPlayingEffect = useEffect(() => {
     handleCurrentPlaying();
   }, [vs.progress, vs.playing]);
@@ -116,12 +101,8 @@ export default function HomePage(this: any) {
         break;
       }
     }
-    if(currentPlaying==2){
-      playerRef.current?.seekTo(0);
-    }
-    setCurrentPlaying(index);
 
-    
+    setCurrentPlaying(index);
   };
 
   const addExercise = () => {
@@ -153,7 +134,7 @@ export default function HomePage(this: any) {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl, true,playerRef)}
+            {player(vs, setvs, videoUrl, true, isLooping, currentPlaying)}
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
@@ -167,6 +148,7 @@ export default function HomePage(this: any) {
             vs={vs}
             setvs={setvs}
             videoUrl={videoUrl}
+            isLooping={isLooping}
           />
         </div>
 
@@ -186,7 +168,7 @@ export default function HomePage(this: any) {
           <div className="flex flex-col overflow-hidden bg-white">
             <AddExerciseButton addExercise={addExercise} />
             <VideoUploadButton onVideoUpload={setVideoUrl} />
-            {LoopButton(isLooping,setLoop)}
+            {LoopButton(isLooping, setLoop)}
           </div>
         </div>
       </div>

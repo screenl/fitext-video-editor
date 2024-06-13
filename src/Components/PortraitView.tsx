@@ -16,6 +16,7 @@ interface exerciseProp {
   vs: videoState; //video state
   setvs: setVideoState; //set video state
   videoUrl: string | null; // also a state
+  isLooping: boolean;
 }
 
 interface recordProps {
@@ -29,6 +30,7 @@ const PortraitView: React.FC<exerciseProp> = ({
   vs,
   setvs,
   videoUrl,
+  isLooping,
 }) => {
   const [records, setRecords] = useState<recordProps[]>([]);
 
@@ -59,7 +61,7 @@ const PortraitView: React.FC<exerciseProp> = ({
     <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
       <div className="mb-4 h-[200px] rounded-lg bg-gray-200">
         {/* 竖屏上半部分留出空白放视频 false is for toggling the visibility of the side bar*/}
-        {player(vs, setvs, videoUrl, false)}
+        {player(vs, setvs, videoUrl, false, isLooping, currentPlaying)}
       </div>
       {/* 大的bubble */}
       <div className="mb-4 rounded-lg bg-blue-500 p-2 text-white">

@@ -11,7 +11,8 @@ export default function player(
   setstate: setVideoState,
   url: string | null,
   turnOnBar: boolean,
-  playerRef: React.RefObject<ReactPlayer>
+  playerRef: boolean,
+  currentPlaying: number,
 ) {
   function progressBar() {
     return (
@@ -75,7 +76,7 @@ export default function player(
     <div className="flex h-full flex-row bg-white text-black dark:bg-gray-900 dark:text-white">
       {turnOnBar && sideBar()}
       <div className="relative flex h-full w-full flex-1 flex-col">
-        {videoPreview(state, setstate, url,playerRef)}
+        {videoPreview(state, setstate, url, playerRef, currentPlaying)}
         {videoSpecs()}
         {progressBar()}
       </div>
