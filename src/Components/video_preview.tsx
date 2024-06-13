@@ -1,17 +1,24 @@
 import dynamic from "next/dynamic";
 import { setVideoState, videoState } from "./video_state";
 import { OnProgressProps } from "react-player/base";
-import React from "react";
+import React, { forwardRef } from "react";
 import ReactPlayer from "react-player";
 const ReactPlayerf = dynamic(() => import("react-player"), { ssr: false });
 
-export function videoPreview(this: any, 
+interface videoPreviewProps {
   state: videoState,
   setstate: setVideoState,
-  url: string | null,  
-  playerRef: React.RefObject<ReactPlayer>
+  url: string | null
+};
 
+export const VideoPreview = forwardRef(
+function videoPreview(
+  vp: videoPreviewProps,  
+  playerRef
 ) {
+  let state = vp.state;
+  let setstate = vp.setstate;
+  let url = vp.url;
   if (!state) {
     console.error("State is undefined");
     return null;
@@ -43,3 +50,4 @@ export function videoPreview(this: any,
     </div>
   );
 }
+);

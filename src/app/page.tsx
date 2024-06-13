@@ -1,6 +1,6 @@
 "use client"; // This is a client component 👈🏽
 
-import player from "../Components/video_player";
+import Player from "../Components/video_player";
 import React, { useState, useEffect } from "react";
 
 import TimeLine from "~/Components/TimeLine";
@@ -10,6 +10,7 @@ import PortraitView from "~/Components/PortraitView";
 import { number } from "zod";
 import LoopButton from "~/Components/LoopButton";
 import ReactPlayer, { ReactPlayerProps } from "react-player";
+import { videoState } from "~/Components/video_state";
 
 interface MobilePreviewProps {
   videoUrl: string | null;
@@ -50,7 +51,14 @@ const MobilePreview: React.FC<MobilePreviewProps> = ({
 }) => {
   return (
     <div className="aspect-video h-[450px] w-[300px]">
-      {player(vs, setvs, videoUrl,false,playerRef)}
+      {/* Player(vs, setvs, videoUrl,false,playerRef) */}
+      <Player 
+        state={vs} 
+        setstate={setvs} 
+        url={videoUrl} 
+        turnOnBar={false}  
+        ref={playerRef}    
+      />
     </div>
   );
 };
@@ -116,7 +124,8 @@ export default function HomePage(this: any) {
         break;
       }
     }
-    if(currentPlaying==2){
+    if(currentPlaying==1){
+      console.log(playerRef.current);
       playerRef.current?.seekTo(0);
     }
     setCurrentPlaying(index);
@@ -125,6 +134,7 @@ export default function HomePage(this: any) {
   };
 
   const addExercise = () => {
+    console.log(playerRef.current);
     if (exercises.length == 0) {
       setExercisesState([
         ...exercises,
@@ -153,7 +163,14 @@ export default function HomePage(this: any) {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl, true,playerRef)}
+            {/* Player(vs, setvs, videoUrl, true,playerRef) */}
+            <Player 
+              state={vs} 
+              setstate={setvs} 
+              url={videoUrl} 
+              turnOnBar={false}  
+              ref={playerRef}    
+            />
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}

@@ -1,18 +1,30 @@
 import ReactPlayer, { ReactPlayerProps } from "react-player";
-import { videoPreview } from "./video_preview";
+import { VideoPreview } from "./video_preview";
 import { videoState, setVideoState } from "./video_state";
+import { forwardRef } from "react";
 
 function secs_to_mmss(t: number) {
   return new Date(t * 1000).toISOString().slice(14, 19);
 }
 
-export default function player(
+interface PlayerProps{
   state: videoState,
   setstate: setVideoState,
   url: string | null,
   turnOnBar: boolean,
-  playerRef: React.RefObject<ReactPlayer>
+}
+
+
+
+export const Player = forwardRef(
+function player(
+  pp: PlayerProps,
+  playerRef
 ) {
+  let state = pp.state;
+  let setstate = pp.setstate;
+  let url = pp.url;
+  let turnOnBar = pp.turnOnBar;
   function progressBar() {
     return (
       <div className="z-10 mb-2 mt-4 flex h-5 w-full flex-row">
@@ -75,10 +87,18 @@ export default function player(
     <div className="flex h-full flex-row bg-white text-black dark:bg-gray-900 dark:text-white">
       {turnOnBar && sideBar()}
       <div className="relative flex h-full w-full flex-1 flex-col">
-        {videoPreview(state, setstate, url,playerRef)}
+        <VideoPreview 
+          state={state}
+          setstate={setstate}
+          url={url}
+          ref={playerRef}
+        />
         {videoSpecs()}
         {progressBar()}
       </div>
     </div>
   );
 }
+);
+
+export default Player;

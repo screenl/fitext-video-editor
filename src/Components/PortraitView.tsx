@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import player from "./video_player";
+import Player from "./video_player";
 import { type videoState, type setVideoState } from "./video_state";
 import { record } from "zod";
 interface Exercise {
@@ -59,7 +59,13 @@ const PortraitView: React.FC<exerciseProp> = ({
     <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
       <div className="mb-4 h-[200px] rounded-lg bg-gray-200">
         {/* 竖屏上半部分留出空白放视频 false is for toggling the visibility of the side bar*/}
-        {player(vs, setvs, videoUrl, false)}
+        {/* Player(vs, setvs, videoUrl, false) */}
+        <Player 
+          state={vs} 
+          setstate={setvs} 
+          url={videoUrl} 
+          turnOnBar={false}     
+        />
       </div>
       {/* 大的bubble */}
       <div className="mb-4 rounded-lg bg-blue-500 p-2 text-white">
