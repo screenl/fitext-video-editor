@@ -7,7 +7,7 @@ import TimeLine from "~/Components/TimeLine";
 import VideoUploadButton from "~/Components/VideoUploadButton";
 import AddExerciseButton from "~/Components/AddExerciseButton";
 import PortraitView from "~/Components/PortraitView";
-import { number } from "zod";
+import LoopButton from "~/Components/LoopButton";
 
 interface MobilePreviewProps {
   videoUrl: string | null;
@@ -37,21 +37,11 @@ interface MobilePreviewProps {
     playing: boolean;
     time: number;
   };
+  islooping: boolean;
+  currentPlaying: number;
 }
 
-const MobilePreview: React.FC<MobilePreviewProps> = ({
-  videoUrl,
-  setvs,
-  vs,
-}) => {
-  return (
-    <div className="aspect-video h-[450px] w-[300px]">
-      {player(vs, setvs, videoUrl)}
-    </div>
-  );
-};
-
-export default function HomePage() {
+export default function HomePage(this: any) {
   /*
   List of important hooks:
   state [vs, setvs]: keep track of the playing properties of the video, like duration and play or stop status etc.
@@ -71,6 +61,7 @@ export default function HomePage() {
     playing: false,
   });
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  // const playerRef = React.useRef<ReactPlayer>(null);
 
   // The state that manage the information of the exercises in the box
   const [exercises, setExercisesState] = useState<
@@ -95,18 +86,26 @@ export default function HomePage() {
     handleCurrentPlaying();
   }, [vs.progress, vs.playing]);
 
+  const [isLooping, setLoop] = useState(false);
+  const [currentExercise, setCurrentExercise] = useState([0,1000]);
+
   // The state that monitors the current box
   const [currentPlaying, setCurrentPlaying] = useState<number>(0);
   const handleCurrentPlaying = () => {
     let currentTime: number = vs.progress / vs.time;
+    let acc = 0;
     let index = 0;
+
     for (index; index < exercises.length; index++) {
-      const element = exercises[index];
-      currentTime -= element.size / 100; // Here I am using size to monitor the progress
-      if (currentTime <= 0) {
+      let element = exercises[index]!;
+      acc += element.size! / 100; // Here I am using size to monitor the progress
+      if (currentTime <= acc) {
         break;
       }
     }
+
+    if(!isLooping)
+      setCurrentExercise([exercises[index]!.time,acc*vs.time-exercises[index]!.time]);
     setCurrentPlaying(index);
   };
 
@@ -139,7 +138,7 @@ export default function HomePage() {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl, true)}
+            {player(vs, setvs, videoUrl, true, isLooping, currentPlaying,currentExercise[0]!,currentExercise[1]!)}
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
@@ -153,6 +152,9 @@ export default function HomePage() {
             vs={vs}
             setvs={setvs}
             videoUrl={videoUrl}
+            isLooping={isLooping}
+            currentExLength={currentExercise[0]!}
+            currentExStart={currentExercise[1]!}
           />
         </div>
 
@@ -172,6 +174,7 @@ export default function HomePage() {
           <div className="flex flex-col overflow-hidden bg-white">
             <AddExerciseButton addExercise={addExercise} />
             <VideoUploadButton onVideoUpload={setVideoUrl} />
+            {LoopButton(isLooping, setLoop)}
           </div>
         </div>
       </div>

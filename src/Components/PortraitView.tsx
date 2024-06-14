@@ -16,6 +16,9 @@ interface exerciseProp {
   vs: videoState; //video state
   setvs: setVideoState; //set video state
   videoUrl: string | null; // also a state
+  isLooping: boolean;
+  currentExLength: number;
+  currentExStart: number;
 }
 
 interface recordProps {
@@ -29,6 +32,9 @@ const PortraitView: React.FC<exerciseProp> = ({
   vs,
   setvs,
   videoUrl,
+  isLooping,
+  currentExLength,
+  currentExStart,
 }) => {
   const [records, setRecords] = useState<recordProps[]>([]);
 
@@ -39,8 +45,8 @@ const PortraitView: React.FC<exerciseProp> = ({
         return [
           ...records,
           {
-            name: exercises[currentPlaying].name,
-            time: exercises[currentPlaying].time,
+            name: exercises[currentPlaying]!.name,
+            time: exercises[currentPlaying]!.time,
           },
         ];
       } else {
@@ -52,24 +58,24 @@ const PortraitView: React.FC<exerciseProp> = ({
   const scrollToBottom = useEffect(() => {
     // This effect scrolls to the bottom (revealing the new popped up exercise)
     // whenever {records} is updated.
-    recordList.current.scrollTop = recordList.current.scrollHeight;
+    recordList.current!.scrollTop = recordList.current!.scrollHeight;
   }, [records]);
 
   return (
     <div className="ml-2 h-[450px] w-[250px] rounded-lg bg-white p-4">
       <div className="mb-4 h-[200px] rounded-lg bg-gray-200">
         {/* 竖屏上半部分留出空白放视频 false is for toggling the visibility of the side bar*/}
-        {player(vs, setvs, videoUrl, false)}
+        {player(vs, setvs, videoUrl, false, isLooping, currentPlaying,currentExLength,currentExStart)}
       </div>
       {/* 大的bubble */}
       <div className="mb-4 rounded-lg bg-blue-500 p-2 text-white">
         {/* 两个平行的小bubble */}
         <div className="mb-2 flex justify-between">
           <span className="rounded-full bg-white px-2 py-1 text-sm text-blue-500">
-            Set {exercises[currentPlaying].sets}
+            Set {exercises[currentPlaying]!.sets}
           </span>
           <span className="rounded-full bg-white px-2 py-1 text-sm text-blue-500">
-            {exercises[currentPlaying].time} Sec
+            {exercises[currentPlaying]!.time} Sec
           </span>
         </div>
         {/* 两个进度条 */}
