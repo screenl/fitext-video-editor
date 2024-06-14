@@ -15,6 +15,8 @@ export default function player(
   currentPlaying: number,
   currentExLength: number,
   currentExStart: number,
+  setCurrentPlaying: any,
+  max_length: number,
 ) {
   function progressBar() {
     return (
@@ -35,7 +37,14 @@ export default function player(
   function sideBar() {
     return (
       <div className="flex h-auto w-12 max-w-12 flex-col rounded-r-lg border-2 border-gray-300 dark:border-gray-800">
-        <div className="flex basis-1/3 content-center justify-center">
+        <div
+          className="flex basis-1/3 content-center justify-center"
+          onClick={() => {
+            setCurrentPlaying((original: number) => {
+              return original - 1 >= 0 ? original - 1 : 0;
+            });
+          }}
+        >
           <img
             src="arr.svg"
             className="w-9/12 rotate-90 scale-x-[-1] opacity-30 dark:invert"
@@ -53,7 +62,14 @@ export default function player(
           ></img>
         </div>
 
-        <div className="flex basis-1/3 content-center justify-center">
+        <div
+          className="flex basis-1/3 content-center justify-center"
+          onClick={() => {
+            setCurrentPlaying((original: number) => {
+              return (original + 1) % max_length;
+            });
+          }}
+        >
           <img
             src="arr.svg"
             className="w-9/12 rotate-90  opacity-30 dark:invert"
@@ -78,7 +94,15 @@ export default function player(
     <div className="flex h-full flex-row bg-white text-black dark:bg-gray-900 dark:text-white">
       {turnOnBar && sideBar()}
       <div className="relative flex h-full w-full flex-1 flex-col">
-        {videoPreview(state, setstate, url, playerRef, currentPlaying,currentExLength,currentExStart)}
+        {videoPreview(
+          state,
+          setstate,
+          url,
+          playerRef,
+          currentPlaying,
+          currentExLength,
+          currentExStart,
+        )}
         {videoSpecs()}
         {progressBar()}
       </div>

@@ -18,14 +18,19 @@ export function videoPreview(
 ) {
   const playerRef = React.useRef<ReactPlayer>(null);
   const handleLoop = () => {
-    if (state.progress >= currentExLength+currentExStart-0.1 && isLooping) {
-      console.log(state.progress,currentExLength,currentExStart);
-      playerRef.current?.seekTo(currentExStart,'seconds');
+    if (
+      (state.progress >= currentExLength + currentExStart - 0.1 ||
+        state.progress <= currentExStart - 0.1) &&
+      isLooping
+    ) {
+      console.log(state.progress, currentExLength, currentExStart);
+      playerRef.current?.seekTo(currentExStart, "seconds");
     }
   };
 
   const activateLoop = useEffect(() => {
     handleLoop();
+    console.log("current:", currentPlaying);
   }, [state.progress, playerRef]);
 
   if (!state) {

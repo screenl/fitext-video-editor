@@ -83,11 +83,11 @@ export default function HomePage(this: any) {
   ]);
 
   const currentPlayingEffect = useEffect(() => {
-    handleCurrentPlaying();
+    if (vs.playing) handleCurrentPlaying();
   }, [vs.progress, vs.playing]);
 
   const [isLooping, setLoop] = useState(false);
-  const [currentExercise, setCurrentExercise] = useState([0,1000]);
+  const [currentExercise, setCurrentExercise] = useState([0, 1000]);
 
   // The state that monitors the current box
   const [currentPlaying, setCurrentPlaying] = useState<number>(0);
@@ -104,10 +104,19 @@ export default function HomePage(this: any) {
       }
     }
 
-    if(!isLooping)
-      setCurrentExercise([exercises[index]!.time,acc*vs.time-exercises[index]!.time]);
     setCurrentPlaying(index);
   };
+
+  const updateCurrentEx = React.useEffect(() => {
+    let acc = 0;
+    let index = 0;
+    for (index; index < currentPlaying; index++) {
+      let element = exercises[index]!;
+      acc += element.size! / 100; // Here I am using size to monitor the progress
+    }
+
+    setCurrentExercise([exercises[currentPlaying]!.time, acc * vs.time]);
+  }, [currentPlaying]);
 
   const addExercise = () => {
     if (exercises.length == 0) {
@@ -138,7 +147,18 @@ export default function HomePage(this: any) {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl, true, isLooping, currentPlaying,currentExercise[0]!,currentExercise[1]!)}
+            {player(
+              vs,
+              setvs,
+              videoUrl,
+              true,
+              isLooping,
+              currentPlaying,
+              currentExercise[0]!,
+              currentExercise[1]!,
+              setCurrentPlaying,
+              exercises.length,
+            )}
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
@@ -155,6 +175,8 @@ export default function HomePage(this: any) {
             isLooping={isLooping}
             currentExLength={currentExercise[0]!}
             currentExStart={currentExercise[1]!}
+            setCurrentPlaying={setCurrentPlaying}
+            maxLength={exercises.length}
           />
         </div>
 
