@@ -13,11 +13,14 @@ export function videoPreview(
   url: string | null,
   isLooping: boolean,
   currentPlaying: number,
+  currentExLength: number,
+  currentExStart: number,
 ) {
   const playerRef = React.useRef<ReactPlayer>(null);
   const handleLoop = () => {
-    if (state.progress >= state.time / 5 && isLooping) {
-      playerRef.current?.seekTo(0);
+    if (state.progress >= currentExLength+currentExStart-0.1 && isLooping) {
+      console.log(state.progress,currentExLength,currentExStart);
+      playerRef.current?.seekTo(currentExStart);
     }
   };
 

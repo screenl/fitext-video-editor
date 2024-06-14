@@ -13,6 +13,8 @@ export default function player(
   turnOnBar: boolean,
   playerRef: boolean,
   currentPlaying: number,
+  currentExLength: number,
+  currentExStart: number,
 ) {
   function progressBar() {
     return (
@@ -76,7 +78,7 @@ export default function player(
     <div className="flex h-full flex-row bg-white text-black dark:bg-gray-900 dark:text-white">
       {turnOnBar && sideBar()}
       <div className="relative flex h-full w-full flex-1 flex-col">
-        {videoPreview(state, setstate, url, playerRef, currentPlaying)}
+        {videoPreview(state, setstate, url, playerRef, currentPlaying,currentExLength,currentExStart)}
         {videoSpecs()}
         {progressBar()}
       </div>

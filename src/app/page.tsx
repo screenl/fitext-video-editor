@@ -87,21 +87,24 @@ export default function HomePage(this: any) {
   }, [vs.progress, vs.playing]);
 
   const [isLooping, setLoop] = useState(false);
+  const [currentExercise, setCurrentExercise] = useState([0,1000]);
 
   // The state that monitors the current box
   const [currentPlaying, setCurrentPlaying] = useState<number>(0);
   const handleCurrentPlaying = () => {
     let currentTime: number = vs.progress / vs.time;
+    let acc = 0;
     let index = 0;
 
     for (index; index < exercises.length; index++) {
-      const element = exercises[index];
-      currentTime -= element.size / 100; // Here I am using size to monitor the progress
-      if (currentTime <= 0) {
+      let element = exercises[index]!;
+      acc += element.size! / 100; // Here I am using size to monitor the progress
+      if (currentTime <= acc) {
         break;
       }
     }
 
+    setCurrentExercise([exercises[index]!.time,acc*vs.time-exercises[index]!.time]);
     setCurrentPlaying(index);
   };
 
@@ -134,7 +137,7 @@ export default function HomePage(this: any) {
         {/* Top part with Landscape and Portrait view */}
         <div className="flex flex-row">
           <div className="aspect-video h-[450px] w-[900px]">
-            {player(vs, setvs, videoUrl, true, isLooping, currentPlaying)}
+            {player(vs, setvs, videoUrl, true, isLooping, currentPlaying,currentExercise[0]!,currentExercise[1]!)}
           </div>
           {/*  TODO: fix size issues */}
           {/*<MobilePreview vs={vs} setvs={setvs} videoUrl={videoUrl} />*/}
