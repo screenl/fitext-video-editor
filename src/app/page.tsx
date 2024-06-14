@@ -104,7 +104,8 @@ export default function HomePage(this: any) {
       }
     }
 
-    setCurrentExercise([exercises[index]!.time,acc*vs.time-exercises[index]!.time]);
+    if(!isLooping)
+      setCurrentExercise([exercises[index]!.time,acc*vs.time-exercises[index]!.time]);
     setCurrentPlaying(index);
   };
 
@@ -152,6 +153,8 @@ export default function HomePage(this: any) {
             setvs={setvs}
             videoUrl={videoUrl}
             isLooping={isLooping}
+            currentExLength={currentExercise[0]!}
+            currentExStart={currentExercise[1]!}
           />
         </div>
 

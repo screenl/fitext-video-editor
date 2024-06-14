@@ -20,7 +20,7 @@ export function videoPreview(
   const handleLoop = () => {
     if (state.progress >= currentExLength+currentExStart-0.1 && isLooping) {
       console.log(state.progress,currentExLength,currentExStart);
-      playerRef.current?.seekTo(currentExStart);
+      playerRef.current?.seekTo(currentExStart,'seconds');
     }
   };
 
